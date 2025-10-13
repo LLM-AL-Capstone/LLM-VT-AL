@@ -1,0 +1,102 @@
+# Example Configuration File
+# Copy this to config.yaml and customize for your needs
+
+# LLM Configuration
+llm:
+  # Provider options: 'ollama' or 'gemini'
+  provider: ollama
+  
+  # Ollama settings (when provider=ollama)
+  ollama:
+    base_url: http://localhost:11434
+    model: qwen2.5:7b  # Options: qwen2.5:7b, llama2, mistral, mixtral, etc.
+    
+  # Gemini settings (when provider=gemini)
+  gemini:
+    api_key: YOUR_GEMINI_API_KEY_HERE  # Get from https://makersuite.google.com/app/apikey
+    model: gemini-1.5-flash  # Options: gemini-1.5-flash, gemini-1.5-pro
+  
+  # Model-specific settings for different tasks
+  models:
+    # For pattern identification (Script 01 - get_llm_patterns)
+    pattern_identification:
+      temperature: 0.3      # Lower = more consistent
+      max_tokens: 1024
+      
+    # For candidate phrase generation (Script 01 - get_candidate_phrases)
+    candidate_generation:
+      temperature: 0.7      # Higher = more diverse
+      max_tokens: 256
+      
+    # For counterfactual generation (Script 02)
+    counterfactual_generation:
+      temperature: 0.0      # Deterministic
+      max_tokens: 256
+      stop: ["\n"]          # Stop at newline
+      
+    # For semantic filtering (Script 03)
+    semantic_filtering:
+      temperature: 0.0
+      max_tokens: 10
+      
+    # For discriminator filtering (Script 03)
+    discriminator_filtering:
+      temperature: 0.0
+      max_tokens: 256
+
+# Dataset Configuration
+dataset:
+  # Training dataset
+  # Must be in input_data/ folder
+  train_file: emotions_train.csv
+  
+  # Test dataset (for evaluation in Script 05)
+  test_file: emotions_test.csv
+  
+  # Column names in your CSV
+  # Adjust these to match your dataset
+  columns:
+    id: id          # Unique identifier column
+    text: example   # Text content column
+    label: Label    # Label/class column
+  
+  # Labels to exclude from counterfactual generation
+  # (e.g., 'none', 'neutral', 'other')
+  exclude_labels:
+    - none
+
+# Processing Settings
+processing:
+  # Random seed for reproducibility
+  seed: 42
+  
+  # Maximum examples to annotate in Script 01
+  # Reduce for faster testing, increase for more data
+  max_annotations: 150
+  
+  # Token budget limit (to prevent runaway costs)
+  # Approximate token counts:
+  # - 1M tokens ≈ $5-10 (Gemini)
+  # - 10M tokens ≈ $50-100 (Gemini)
+  # - Free for Ollama
+  token_limit: 10000000
+  
+  # Maximum counterfactuals per original example (Script 05)
+  # Higher = more context but slower evaluation
+  max_counterfactuals_per_example: 4
+  
+  # Sample sizes for evaluation (Script 05)
+  # Tests few-shot classification with different N-shot values
+  evaluation_shots: [10, 15, 30, 50, 70, 90, 120]
+  
+  # Multiple seeds for robust evaluation (Script 05)
+  # More seeds = more robust results but longer runtime
+  evaluation_seeds: [1, 42, 55, 92, 99, 555, 765, 1234]
+
+# Directory Configuration
+# Typically no need to change these
+directories:
+  input_data: input_data
+  output_data: output_data
+  interim_output: output_data/interim_output
+  archive: output_data/archive
