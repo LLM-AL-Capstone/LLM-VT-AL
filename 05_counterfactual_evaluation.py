@@ -118,6 +118,15 @@ def counterfactual_shots(
     processing = config['processing']
     dirs = config['directories']
     
+    # Get model name for file naming
+    model_name = config['llm']['provider']
+    if config['llm']['provider'] == 'ollama':
+        model_name = config['llm']['ollama']['model'].replace(':', '_')
+    elif config['llm']['provider'] == 'gemini':
+        model_name = config['llm']['gemini']['model'].replace('-', '_')
+    elif config['llm']['provider'] == 'openai':
+        model_name = config['llm']['openai']['model'].replace('-', '_')
+    
     col_text = dataset_config['columns']['text']
     col_label = dataset_config['columns']['label']
     
@@ -256,7 +265,7 @@ def counterfactual_shots(
     )
     
     dataset_name = dataset_config['train_file'].replace('.csv', '')
-    output_file = f"{dirs['archive']}/gpt/[{shuffle_seed}][GPT]_counter_{dataset_name}_prf.csv"
+    output_file = f"{dirs['archive']}/gpt/[{shuffle_seed}][{model_name}]_counter_{dataset_name}_prf.csv"
     df_results.to_csv(output_file, index=False)
     
     print(f"\n  Results saved to: {output_file}")
@@ -281,9 +290,18 @@ def evaluate_counterfactuals(config: dict, llm_provider):
     processing = config['processing']
     seed = processing['seed']
     
+    # Get model name for file naming
+    model_name = config['llm']['provider']
+    if config['llm']['provider'] == 'ollama':
+        model_name = config['llm']['ollama']['model'].replace(':', '_')
+    elif config['llm']['provider'] == 'gemini':
+        model_name = config['llm']['gemini']['model'].replace('-', '_')
+    elif config['llm']['provider'] == 'openai':
+        model_name = config['llm']['openai']['model'].replace('-', '_')
+    
     # Load filtered counterfactuals
     dataset_file = dataset_config['train_file']
-    filtered_file = f"{dirs['output_data']}/[{seed}]filtered_{dataset_file}"
+    filtered_file = f"{dirs['output_data']}/[{seed}][{model_name}]filtered_{dataset_file}"
     
     try:
         df = pd.read_csv(filtered_file)

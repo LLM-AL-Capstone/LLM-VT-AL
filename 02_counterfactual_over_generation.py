@@ -25,8 +25,8 @@ Script 02: Counterfactual Ov    # Output structure
     start_index = 0script generates complete counterfactual sentences using LLM.
 It reads candidate phrases from Script 01 and creates full sentence transformations.
 
-Input: output_data/[{SEED}]{dataset}_candidate_phrases_annotated_data.csv
-Output: output_data/[{seed}]counterfactuals_{dataset}.csv
+Input: output_data/[{SEED}][{MODEL}]{dataset}_candidate_phrases_annotated_data.csv
+Output: output_data/[{seed}][{model}]counterfactuals_{dataset}.csv
 """
 
 import sys
@@ -60,8 +60,17 @@ def generate_counterfactuals(config: dict, llm_provider):
     seed = processing['seed']
     dataset_name = dataset_config['train_file'].replace('.csv', '')
     
+    # Get model name for file naming
+    model_name = config['llm']['provider']
+    if config['llm']['provider'] == 'ollama':
+        model_name = config['llm']['ollama']['model'].replace(':', '_')
+    elif config['llm']['provider'] == 'gemini':
+        model_name = config['llm']['gemini']['model'].replace('-', '_')
+    elif config['llm']['provider'] == 'openai':
+        model_name = config['llm']['openai']['model'].replace('-', '_')
+    
     # Construct input filename
-    candidate_file = f"[{seed}]{dataset_name}_candidate_phrases_annotated_data.csv"
+    candidate_file = f"[{seed}][{model_name}]{dataset_name}_candidate_phrases_annotated_data.csv"
     input_path = f"{dirs['output_data']}/{candidate_file}"
     
     # Load candidate phrases from Script 01
@@ -86,7 +95,7 @@ def generate_counterfactuals(config: dict, llm_provider):
     ]
     
     # Define output file path
-    output_file = f"{dirs['output_data']}/[{seed}]counterfactuals_{dataset_config['train_file']}"
+    output_file = f"{dirs['output_data']}/[{seed}][{model_name}]counterfactuals_{dataset_config['train_file']}"
     
     # Initialize data collector and error tracking
     data_collector = []

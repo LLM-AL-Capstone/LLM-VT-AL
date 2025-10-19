@@ -1,7 +1,7 @@
 # LLM Configuration
 llm:
   # Provider options: 'ollama', 'openai', or 'gemini'
-  provider: gemini
+  provider: ollama
   
   # Ollama settings (when provider=ollama)
   ollama:
@@ -15,7 +15,7 @@ llm:
     
   # Gemini settings (when provider=gemini)
   gemini:
-    api_key: 
+    api_key: AIzaSyCPP8VMJfGStFgKy_EM2KPgDjX7pdnC8II
     model: gemini-2.5-flash  # Using 2.5-flash with thinking disabled
   
   # Model-specific settings for different tasks
@@ -49,10 +49,10 @@ llm:
 # Dataset Configuration
 dataset:
   # Training dataset
-  train_file: yelp_train.csv  # filename in input_data/ folder
+  train_file: emotions_train.csv  # filename in input_data/ folder
   
   # Test dataset (for evaluation in Script 05)
-  test_file: yelp_test.csv   # filename in input_data/ folder
+  test_file: emotions_test.csv   # filename in input_data/ folder
   
   # Column names in CSV
   columns:

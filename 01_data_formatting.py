@@ -16,6 +16,7 @@ import pandas as pd
 import json
 import ast
 import time
+import re
 from typing import List, Dict
 from utils import (
     load_config, 
@@ -122,30 +123,33 @@ def get_llm_patterns(config: dict, llm_provider):
             messages = [
                 {
                     "role": "system",
-                    "content": "You are an expert at identifying key phrases in text that express specific concepts or categories."
+                    "content": "You are an expert at identifying key phrases in text that express specific emotions or sentiments. You must follow the exact output format specified."
                 },
                 {
                     "role": "user",
-                    "content": f"""Analyze these sentences labeled as '{label}':
+                    "content": f"""Task: Analyze these sentences labeled as '{label}' and identify key phrases that express this emotion.
 
+Sentences:
 {examples_text}
 
-For EACH sentence above, identify 1-3 key phrases that express the '{label}' concept.
+Instructions:
+1. For EACH sentence above, identify 1-3 key phrases that strongly express the '{label}' emotion
+2. Copy the EXACT original sentence without any modifications
+3. List the key phrases separated by commas
 
-CRITICAL: Return the EXACT original sentence, don't modify it at all.
-
-Format:
-SENTENCE: [copy exact sentence from above]
-PHRASES: phrase1, phrase2
+Required Output Format (use exactly this format):
+SENTENCE: [exact original sentence]
+PHRASES: [phrase1, phrase2, phrase3]
 ---
 
 Example:
-Input: "the food was delicious and affordable prices"
-Output:
-SENTENCE: the food was delicious and affordable prices  
+Input sentence: "the food was delicious and affordable prices"
+Required output:
+SENTENCE: the food was delicious and affordable prices
 PHRASES: delicious, affordable prices
 ---
-]"""
+
+Important: Use the exact format shown above. Each sentence must be followed by its phrases and then "---" separator."""
                 }
             ]
             
@@ -170,7 +174,7 @@ PHRASES: delicious, affordable prices
                 # This allows ~14,400 requests/day (under 10,000 RPD if run continuously)
                 time.sleep(4.0)
                 
-                # Parse simple text format response
+                # Parse model response with robust model-agnostic parsing
                 result_clean = result.strip()
                 
                 # Remove markdown code blocks if present
@@ -179,41 +183,108 @@ PHRASES: delicious, affordable prices
                     result_clean = '\n'.join(lines[1:-1]) if len(lines) > 2 else result_clean
                     result_clean = result_clean.replace('```', '').strip()
                 
-                # Parse the simple format
+                # Model-agnostic parsing with multiple strategies
                 analyses = []
-                import re
                 
-                # Split by separator lines
-                sections = result_clean.split('---')
-                
-                for section in sections:
-                    section = section.strip()
-                    if not section:
-                        continue
+                def parse_structured_format(text):
+                    """Parse expected SENTENCE:/PHRASES: format"""
+                    parsed_analyses = []
+                    sections = text.split('---')
                     
-                    # Extract SENTENCE and PHRASES lines
-                    lines = [line.strip() for line in section.split('\n') if line.strip()]
-                    sentence = None
-                    phrases = []
+                    for section in sections:
+                        section = section.strip()
+                        if not section:
+                            continue
+                        
+                        lines = [line.strip() for line in section.split('\n') if line.strip()]
+                        sentence = None
+                        phrases = []
+                        
+                        for line in lines:
+                            if line.startswith('SENTENCE:'):
+                                sentence = line[9:].strip()
+                            elif line.startswith('PHRASES:'):
+                                phrase_text = line[8:].strip()
+                                phrases = [p.strip() for p in phrase_text.split(',') if p.strip()]
+                        
+                        if sentence and phrases:
+                            parsed_analyses.append({
+                                'sentence': sentence,
+                                'key_phrases': phrases
+                            })
+                    
+                    return parsed_analyses
+                
+                def parse_natural_format(text):
+                    """Parse natural language responses (common with Qwen)"""
+                    parsed_analyses = []
+                    
+                    # Look for patterns like "1. Sentence: ... Phrases: ..." or numbered lists
+                    patterns = [
+                        r'(?:(?:\d+\.?\s*)?(?:sentence|text):\s*["\']*([^"\'\n]+)["\']*.*?(?:phrases?|words?|terms?):\s*([^\n]+))',
+                        r'(?:(?:\d+\.?\s*)?["\']*([^"\'\n]+)["\']*.*?(?:key phrases?|phrases?|words?):\s*([^\n]+))',
+                        r'(?:(?:\d+\.?\s*)?)["\']*([^"\'\n,]+)["\']*\s*[-–—]\s*([^\n]+)',
+                    ]
+                    
+                    for pattern in patterns:
+                        matches = re.findall(pattern, text, re.IGNORECASE | re.MULTILINE)
+                        for match in matches:
+                            if len(match) == 2:
+                                sentence = match[0].strip()
+                                phrase_text = match[1].strip()
+                                phrases = [p.strip() for p in re.split(r'[,;]', phrase_text) if p.strip()]
+                                
+                                if sentence and phrases:
+                                    parsed_analyses.append({
+                                        'sentence': sentence,
+                                        'key_phrases': phrases
+                                    })
+                    
+                    return parsed_analyses
+                
+                def parse_bullet_format(text):
+                    """Parse bullet point or list format responses"""
+                    parsed_analyses = []
+                    lines = text.split('\n')
+                    current_sentence = None
                     
                     for line in lines:
-                        if line.startswith('SENTENCE:'):
-                            sentence = line[9:].strip()
-                        elif line.startswith('PHRASES:'):
-                            phrase_text = line[8:].strip()
-                            phrases = [p.strip() for p in phrase_text.split(',') if p.strip()]
+                        line = line.strip()
+                        if not line:
+                            continue
+                        
+                        # Check if line contains one of our original sentences
+                        for _, row in batch_examples.iterrows():
+                            original_text = row[col_text]
+                            if original_text.lower() in line.lower() or line.lower() in original_text.lower():
+                                current_sentence = original_text
+                                # Extract phrases from the same line or look for following phrases
+                                phrase_part = line.split(':')[-1] if ':' in line else ''
+                                phrases = [p.strip() for p in re.split(r'[,;]', phrase_part) if p.strip()]
+                                
+                                if phrases:
+                                    parsed_analyses.append({
+                                        'sentence': current_sentence,
+                                        'key_phrases': phrases
+                                    })
+                                break
                     
-                    if sentence and phrases:
-                        analyses.append({
-                            'sentence': sentence,
-                            'key_phrases': phrases
-                        })
+                    return parsed_analyses
+                
+                # Try parsing strategies in order of preference
+                analyses = parse_structured_format(result_clean)
                 
                 if not analyses:
-                    # Fallback: try to extract any sentences and phrases from the response
-                    print(f"    ⚠ Simple format parsing found no results, trying fallback")
-                    
-                    # Look for any patterns that might be sentences and phrases
+                    print(f"    📋 Structured format failed, trying natural language parsing...")
+                    analyses = parse_natural_format(result_clean)
+                
+                if not analyses:
+                    print(f"    📋 Natural format failed, trying bullet point parsing...")
+                    analyses = parse_bullet_format(result_clean)
+                
+                if not analyses:
+                    # Final fallback: regex extraction
+                    print(f"    📋 All parsing strategies failed, trying regex fallback...")
                     sentence_matches = re.findall(r'SENTENCE:\s*(.+)', result_clean)
                     phrase_matches = re.findall(r'PHRASES:\s*(.+)', result_clean)
                     
@@ -227,7 +298,7 @@ PHRASES: delicious, affordable prices
                             })
                 
                 if not analyses:
-                    print(f"    ❌ ERROR: Could not parse response. Raw response:")
+                    print(f"    ❌ ERROR: All parsing strategies failed. Raw response:")
                     print(f"    '{result_clean[:500]}...' (truncated)")
                     print(f"    ERROR: Failed to process batch for '{label}': No valid sentences/phrases found")
                     continue
@@ -290,7 +361,15 @@ PHRASES: delicious, affordable prices
     df_patterns = pd.DataFrame(data_collector, columns=col_names)
     
     dataset_name = dataset_config['train_file'].replace('.csv', '')
-    output_file = f"{dirs['output_data']}/annotated_data_with_pattern_{dataset_name}.csv"
+    model_name = config['llm']['provider']
+    if config['llm']['provider'] == 'ollama':
+        model_name = config['llm']['ollama']['model'].replace(':', '_')
+    elif config['llm']['provider'] == 'gemini':
+        model_name = config['llm']['gemini']['model'].replace('-', '_')
+    elif config['llm']['provider'] == 'openai':
+        model_name = config['llm']['openai']['model'].replace('-', '_')
+    
+    output_file = f"{dirs['output_data']}/[{seed}][{model_name}]annotated_data_with_pattern_{dataset_name}.csv"
     df_patterns.to_csv(output_file, index=False)
     
     print(f"\n✓ SUCCESS: Saved {len(df_patterns)} annotated examples to:")
@@ -339,7 +418,15 @@ def get_candidate_phrases(config: dict, llm_provider):
     
     # Load annotated patterns from previous step
     dataset_name = dataset_config['train_file'].replace('.csv', '')
-    pattern_file = f"{dirs['output_data']}/annotated_data_with_pattern_{dataset_name}.csv"
+    model_name = config['llm']['provider']
+    if config['llm']['provider'] == 'ollama':
+        model_name = config['llm']['ollama']['model'].replace(':', '_')
+    elif config['llm']['provider'] == 'gemini':
+        model_name = config['llm']['gemini']['model'].replace('-', '_')
+    elif config['llm']['provider'] == 'openai':
+        model_name = config['llm']['openai']['model'].replace('-', '_')
+    
+    pattern_file = f"{dirs['output_data']}/[{seed}][{model_name}]annotated_data_with_pattern_{dataset_name}.csv"
     
     try:
         df = pd.read_csv(pattern_file)
@@ -400,23 +487,30 @@ def get_candidate_phrases(config: dict, llm_provider):
                 messages = [
                     {
                         "role": "system",
-                        "content": "You are an expert at generating alternative phrases for text transformation."
+                        "content": "You are an expert at generating alternative phrases for emotion transformation in text. You must provide exactly the requested format."
                     },
                     {
                         "role": "user",
-                        "content": f"""Sentence: "{sentence}"
+                        "content": f"""Task: Generate alternative phrases to change the emotion in a sentence.
 
-Key phrase: "{matched_phrase}"
+Original sentence: "{sentence}"
+Current phrase: "{matched_phrase}" (expresses '{label}')
+Target emotion: '{target_label}'
 
 Generate 5-7 alternative phrases that could replace "{matched_phrase}" to express '{target_label}' instead of '{label}'.
 
 Requirements:
-- Maintain sentence structure
-- Keep the context
-- Only change the content to reflect '{target_label}'
-- Be natural and diverse
+1. Each alternative should fit naturally in the sentence context
+2. Maintain grammatical structure and meaning flow
+3. Only change the emotional tone to reflect '{target_label}'
+4. Make alternatives diverse but appropriate
+5. Return ONLY the alternative phrases, separated by commas
 
-Provide comma-separated alternatives."""
+Expected output format: phrase1, phrase2, phrase3, phrase4, phrase5
+
+Example:
+If replacing "terrible" (negative) with positive alternatives:
+excellent, wonderful, amazing, fantastic, great"""
                     }
                 ]
                 
@@ -444,8 +538,62 @@ Provide comma-separated alternatives."""
                     prompt_text = " ".join([m['content'] for m in messages])
                     num_tokens += llm_provider.count_tokens(prompt_text + result)
                     
-                    # Parse comma-separated phrases
-                    candidates = [p.strip() for p in result.split(',')]
+                    # Parse candidate phrases with robust parsing
+                    def parse_candidates(text):
+                        """Parse candidate phrases from various model response formats"""
+                        text = text.strip()
+                        
+                        # Remove common prefixes/suffixes
+                        prefixes_to_remove = [
+                            'here are', 'the alternatives are', 'alternative phrases:', 'alternatives:',
+                            'possible replacements:', 'suggestions:', 'here are the alternatives:',
+                            'the alternative phrases are:', 'replacements:'
+                        ]
+                        
+                        text_lower = text.lower()
+                        for prefix in prefixes_to_remove:
+                            if text_lower.startswith(prefix):
+                                text = text[len(prefix):].strip()
+                                break
+                        
+                        # Remove numbered lists (1., 2., etc.)
+                        text = re.sub(r'^\d+\.\s*', '', text, flags=re.MULTILINE)
+                        
+                        # Remove bullet points
+                        text = re.sub(r'^[-•*]\s*', '', text, flags=re.MULTILINE)
+                        
+                        # Split by various separators
+                        separators = [',', ';', '\n', '|']
+                        candidates = []
+                        
+                        # Try comma separation first (most common)
+                        if ',' in text:
+                            candidates = [p.strip() for p in text.split(',')]
+                        elif ';' in text:
+                            candidates = [p.strip() for p in text.split(';')]
+                        elif '\n' in text:
+                            candidates = [p.strip() for p in text.split('\n')]
+                        elif '|' in text:
+                            candidates = [p.strip() for p in text.split('|')]
+                        else:
+                            # Single phrase or space-separated
+                            candidates = [text.strip()]
+                        
+                        # Clean up candidates
+                        cleaned_candidates = []
+                        for candidate in candidates:
+                            candidate = candidate.strip()
+                            # Remove quotes
+                            candidate = candidate.strip('"\'')
+                            # Remove extra whitespace
+                            candidate = re.sub(r'\s+', ' ', candidate)
+                            # Filter out empty or very short candidates
+                            if candidate and len(candidate) > 1:
+                                cleaned_candidates.append(candidate)
+                        
+                        return cleaned_candidates
+                    
+                    candidates = parse_candidates(result)
                     
                     # Store result
                     data_collector_2.append([
@@ -469,7 +617,7 @@ Provide comma-separated alternatives."""
     
     # Create DataFrame and save
     df2 = pd.DataFrame(data_collector_2, columns=col_names_2)
-    output_file = f"{dirs['output_data']}/[{seed}]{dataset_name}_candidate_phrases_annotated_data.csv"
+    output_file = f"{dirs['output_data']}/[{seed}][{model_name}]{dataset_name}_candidate_phrases_annotated_data.csv"
     df2.to_csv(output_file, index=False)
     
     print(f"\n✓ SUCCESS: Saved {len(df2)} candidate phrase sets to:")

@@ -310,7 +310,16 @@ def create_fine_tune_dataset(df: pd.DataFrame, config: dict):
     seed = config['processing']['seed']
     dataset_file = config['dataset']['train_file']
     
-    output_file = f"{dirs['output_data']}/[{seed}]fine_tuneset_{dataset_file}"
+    # Get model name for file naming
+    model_name = config['llm']['provider']
+    if config['llm']['provider'] == 'ollama':
+        model_name = config['llm']['ollama']['model'].replace(':', '_')
+    elif config['llm']['provider'] == 'gemini':
+        model_name = config['llm']['gemini']['model'].replace('-', '_')
+    elif config['llm']['provider'] == 'openai':
+        model_name = config['llm']['openai']['model'].replace('-', '_')
+    
+    output_file = f"{dirs['output_data']}/[{seed}][{model_name}]fine_tuneset_{dataset_file}"
     df_finetune.to_csv(output_file, index=False)
     
     print(f"  Saved to: {output_file}")
@@ -332,8 +341,17 @@ def filter_counterfactuals(config: dict, llm_provider):
     seed = config['processing']['seed']
     dataset_file = config['dataset']['train_file']
     
+    # Get model name for file naming
+    model_name = config['llm']['provider']
+    if config['llm']['provider'] == 'ollama':
+        model_name = config['llm']['ollama']['model'].replace(':', '_')
+    elif config['llm']['provider'] == 'gemini':
+        model_name = config['llm']['gemini']['model'].replace('-', '_')
+    elif config['llm']['provider'] == 'openai':
+        model_name = config['llm']['openai']['model'].replace('-', '_')
+    
     # Load counterfactuals from Script 02
-    input_file = f"{dirs['output_data']}/[{seed}]counterfactuals_{dataset_file}"
+    input_file = f"{dirs['output_data']}/[{seed}][{model_name}]counterfactuals_{dataset_file}"
     
     try:
         df = pd.read_csv(input_file)
@@ -347,21 +365,21 @@ def filter_counterfactuals(config: dict, llm_provider):
     df = heuristic_filtering(df)
     
     # Save interim output
-    interim_file = f"{dirs['interim_output']}/[{seed}]heuristic_filtered_{dataset_file}"
+    interim_file = f"{dirs['interim_output']}/[{seed}][{model_name}]heuristic_filtered_{dataset_file}"
     df.to_csv(interim_file, index=False)
     print(f"  Interim saved to: {interim_file}")
     
     df = llm_semantic_filtering(df, config, llm_provider)
     
     # Save interim output
-    interim_file = f"{dirs['interim_output']}/[{seed}]semantic_filtered_{dataset_file}"
+    interim_file = f"{dirs['interim_output']}/[{seed}][{model_name}]semantic_filtered_{dataset_file}"
     df.to_csv(interim_file, index=False)
     print(f"  Interim saved to: {interim_file}")
     
     df = gpt_discriminator_filtering(df, config, llm_provider)
     
     # Save complete filtered dataset
-    output_file = f"{dirs['output_data']}/[{seed}]filtered_{dataset_file}"
+    output_file = f"{dirs['output_data']}/[{seed}][{model_name}]filtered_{dataset_file}"
     df.to_csv(output_file, index=False)
     print(f"\n✓ Complete filtered dataset saved to: {output_file}")
     
