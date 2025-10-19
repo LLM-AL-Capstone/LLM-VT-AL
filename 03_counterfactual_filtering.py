@@ -370,25 +370,35 @@ def filter_counterfactuals(config: dict, llm_provider):
 
 
 def main():
-    """Main execution"""
+    """Main execution with error handling"""
     print("\n" + "="*60)
     print("Script 03: Counterfactual Filtering")
     print("="*60)
     
-    # Load configuration
-    config = load_config()
-    ensure_directories(config)
-    
-    # Initialize LLM provider
-    print(f"\nINFO: Using LLM provider: {config['llm']['provider']}")
-    llm_provider = get_llm_provider(config)
-    
-    # Run filtering pipeline
-    filter_counterfactuals(config, llm_provider)
-    
-    print("\n" + "="*60)
-    print("Script 03 Complete!")
-    print("="*60 + "\n")
+    try:
+        # Load configuration
+        config = load_config()
+        ensure_directories(config)
+        
+        # Initialize LLM provider
+        print(f"\nINFO: Using LLM provider: {config['llm']['provider']}")
+        llm_provider = get_llm_provider(config)
+        
+        # Run filtering pipeline
+        filter_counterfactuals(config, llm_provider)
+        
+        print("\n" + "="*60)
+        print("Script 03 Complete!")
+        print("="*60 + "\n")
+        
+    except FileNotFoundError as e:
+        print(f"\nERROR: Required input file not found: {e}")
+        print("Make sure Script 02 completed successfully before running Script 03")
+        sys.exit(1)
+    except Exception as e:
+        print(f"\nERROR: Script 03 failed: {e}")
+        print("Check your configuration and input files")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

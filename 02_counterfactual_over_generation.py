@@ -1,8 +1,28 @@
 #!/usr/bin/env python3
 """
-Script 02: Counterfactual Over-Generation
-
-This script generates complete counterfactual sentences using LLM.
+Script 02: Counterfactual Ov    # Output structure
+    col_names = [
+        "id",
+        "ori_text",
+        "ori_label",
+        "pattern",
+        "highlight",
+        "candidate_phrases",
+        "target_label",
+        "counterfactual"
+    ]
+    
+    # Define output file path
+    output_file = f"{dirs['output_data']}/[{seed}]counterfactuals_{dataset_config['train_file']}"
+    
+    # Initialize data collector and error tracking
+    data_collector = []
+    consecutive_errors = 0
+    max_consecutive_errors = 5
+    
+    # Resume from checkpoint if available
+    checkpoint_file = output_file.replace('.csv', '_checkpoint.csv')
+    start_index = 0script generates complete counterfactual sentences using LLM.
 It reads candidate phrases from Script 01 and creates full sentence transformations.
 
 Input: output_data/[{SEED}]{dataset}_candidate_phrases_annotated_data.csv
@@ -12,6 +32,8 @@ Output: output_data/[{seed}]counterfactuals_{dataset}.csv
 import sys
 import pandas as pd
 import ast
+import time
+import os
 from utils import (
     load_config,
     ensure_directories,
@@ -63,33 +85,62 @@ def generate_counterfactuals(config: dict, llm_provider):
         "counterfactual"
     ]
     
-    # Initialize data collector
+    # Define output file path
+    output_file = f"{dirs['output_data']}/[{seed}]counterfactuals_{dataset_config['train_file']}"
+    
+    # Initialize data collector and error tracking
     data_collector = []
+    consecutive_errors = 0
+    max_consecutive_errors = 5
     
-    print(f"INFO: Generating counterfactuals...\n")
+    # Resume from checkpoint if available
+    checkpoint_file = output_file.replace('.csv', '_checkpoint.csv')
+    start_index = 0
     
-    # Iterate over each row and generate counterfactuals
-    for index, row in df.iterrows():
-        if (index + 1) % 50 == 0:
-            print(f"Processing {index+1}/{len(df)}...")
-        
-        text = row["ori_text"]
-        label = row["ori_label"]
-        target_label = row["target_label"]
-        highlight = row["highlight"]
-        pattern = row["pattern"]
-        
-        # Show progress for each item
-        print(f"  [{index+1}/{len(df)}] Processing {row['id']}: {label} → {target_label}...", end=' ', flush=True)
-        
-        # Parse candidate phrases
-        try:
-            generated_phrases = ast.literal_eval(row["candidate_phrases"])
-        except:
-            generated_phrases = row["candidate_phrases"]
-        
-        # Construct prompt messages
-        messages = [
+    if os.path.exists(checkpoint_file):
+        print(f"INFO: Found checkpoint file. Loading progress...")
+        checkpoint_df = pd.read_csv(checkpoint_file)
+        data_collector = checkpoint_df.values.tolist()
+        start_index = len(data_collector)
+        print(f"INFO: Resuming from example {start_index + 1}/{len(df)}")
+    
+    print(f"INFO: Generating counterfactuals for {len(df)} examples...")
+    print(f"INFO: Rate limiting enabled - 1 second pause between requests")
+    print(f"INFO: Press Ctrl+C to stop safely and save progress")
+    print()
+
+    # Process counterfactuals with rate limiting and error handling
+    try:
+        for index, row in df.iterrows():
+            # Skip already processed items
+            if index < start_index:
+                continue
+            
+            if (index + 1) % 50 == 0:
+                print(f"\nProgress: {index+1}/{len(df)} examples processed")
+                # Save checkpoint every 50 items
+                if data_collector:
+                    checkpoint_df = pd.DataFrame(data_collector, columns=col_names)
+                    checkpoint_df.to_csv(checkpoint_file, index=False)
+                    print(f"Checkpoint saved to {checkpoint_file}")
+            
+            text = row["ori_text"]
+            label = row["ori_label"]
+            target_label = row["target_label"]
+            highlight = row["highlight"]
+            pattern = row["pattern"]
+            
+            # Show progress for each item
+            print(f"  [{index+1}/{len(df)}] Processing {row['id']}: {label} → {target_label}...", end=' ', flush=True)
+            
+            # Parse candidate phrases
+            try:
+                generated_phrases = ast.literal_eval(row["candidate_phrases"])
+            except:
+                generated_phrases = row["candidate_phrases"]
+            
+            # Construct prompt messages
+            messages = [
             {
                 "role": "system",
                 "content": "The assistant will create a counterfactual example close to the original sentence that contains one of the given phrases."
@@ -113,52 +164,113 @@ Data:
 
 Modified text:"""
             }
-        ]
+            ]
+            
+            # Call LLM with error handling
+            try:
+                response = llm_provider.chat_completion(
+                    messages=messages,
+                    temperature=llm_config['temperature'],
+                    max_tokens=llm_config['max_tokens']
+                )
+                
+                # Clean response (remove quotes if present)
+                counterfactual = response.strip().strip('"\'')
+                
+                print(f"✓")  # Success indicator
+                consecutive_errors = 0  # Reset error counter on success
+                
+                # Store result
+                data_collector.append([
+                    row["id"],
+                    row["ori_text"],
+                    row["ori_label"],
+                    row["pattern"],
+                    row["highlight"],
+                    row["candidate_phrases"],
+                    row["target_label"],
+                    counterfactual
+                ])
+                
+            except Exception as e:
+                error_str = str(e)
+                print(f"✗ (Error: {error_str[:50]})")
+                consecutive_errors += 1
+                
+                # Check for specific error types
+                if "429" in error_str or "RESOURCE_EXHAUSTED" in error_str:
+                    print(f"\nERROR: API quota exhausted!")
+                    print(f"Processed {index}/{len(df)} examples before quota limit")
+                    print(f"Saving progress to checkpoint file...")
+                    
+                    # Save current progress
+                    if data_collector:
+                        checkpoint_df = pd.DataFrame(data_collector, columns=col_names)
+                        checkpoint_df.to_csv(checkpoint_file, index=False)
+                        print(f"Progress saved to: {checkpoint_file}")
+                    
+                    print(f"\nTo resume later:")
+                    print(f"1. Wait for quota reset (usually midnight UTC)")
+                    print(f"2. Re-run this script - it will resume from checkpoint")
+                    sys.exit(1)
+                
+                # Check for too many consecutive errors
+                if consecutive_errors >= max_consecutive_errors:
+                    print(f"\nERROR: {max_consecutive_errors} consecutive failures!")
+                    print(f"This might indicate a persistent issue. Stopping to prevent wasted quota.")
+                    
+                    # Save current progress
+                    if data_collector:
+                        checkpoint_df = pd.DataFrame(data_collector, columns=col_names)
+                        checkpoint_df.to_csv(checkpoint_file, index=False)
+                        print(f"Progress saved to: {checkpoint_file}")
+                    
+                    sys.exit(1)
+                
+                # Store with empty counterfactual on error
+                data_collector.append([
+                    row["id"],
+                    row["ori_text"],
+                    row["ori_label"],
+                    row["pattern"],
+                    row["highlight"],
+                    row["candidate_phrases"],
+                    row["target_label"],
+                    ""  # Empty counterfactual
+                ])
+                
+                print(f" (ERROR - collector now has {len(data_collector)} items)")
+            
+            # Rate limiting: pause between requests to avoid hitting rate limits
+            time.sleep(1.0)  # 1 second pause between requests
         
-        # Call LLM
-        try:
-            response = llm_provider.chat_completion(
-                messages=messages,
-                temperature=llm_config['temperature'],
-                max_tokens=llm_config['max_tokens'],
-                stop=llm_config.get('stop', ["\n"])
-            )
-            
-            # Clean response (remove quotes if present)
-            counterfactual = response.strip().strip('"\'')
-            
-            print(f"✓")  # Success indicator
-            
-            # Store result
-            data_collector.append([
-                row["id"],
-                row["ori_text"],
-                row["ori_label"],
-                row["pattern"],
-                row["highlight"],
-                row["candidate_phrases"],
-                row["target_label"],
-                counterfactual
-            ])
-            
-        except Exception as e:
-            print(f"✗ (Error: {str(e)[:50]})")  # Show error
-            # Store with empty counterfactual on error
-            data_collector.append([
-                row["id"],
-                row["ori_text"],
-                row["ori_label"],
-                row["pattern"],
-                row["highlight"],
-                row["candidate_phrases"],
-                row["target_label"],
-                ""
-            ])
+    except KeyboardInterrupt:
+        print(f"\n\nScript interrupted by user!")
+        print(f"Processed {len(data_collector)}/{len(df)} examples")
+        
+        # Save current progress
+        if data_collector:
+            checkpoint_df = pd.DataFrame(data_collector, columns=col_names)
+            checkpoint_df.to_csv(checkpoint_file, index=False)
+            print(f"Progress saved to: {checkpoint_file}")
+            print(f"Run script again to resume from checkpoint")
+        
+        sys.exit(1)
     
-    # Save output
+    # Processing completed successfully
+    print(f"\n✓ Counterfactual generation completed successfully!")
+    print(f"Generated {len(data_collector)} counterfactuals")
+    print(f"DEBUG: Final data_collector length: {len(data_collector)}")
+    
+    # Save final output
     df2 = pd.DataFrame(data_collector, columns=col_names)
-    output_file = f"{dirs['output_data']}/[{seed}]counterfactuals_{dataset_config['train_file']}"
+    print(f"DEBUG: DataFrame shape: {df2.shape}")
     df2.to_csv(output_file, index=False)
+    
+    # Clean up checkpoint file on successful completion
+    if os.path.exists(checkpoint_file):
+        os.remove(checkpoint_file)
+        print(f"Removed checkpoint file (no longer needed)")
     
     print(f"\n✓ SUCCESS: Generated {len(df2)} counterfactuals")
     print(f"  Output saved to: {output_file}\n")

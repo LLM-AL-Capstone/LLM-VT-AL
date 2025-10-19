@@ -15,6 +15,7 @@ import sys
 import pandas as pd
 import json
 import ast
+import time
 from typing import List, Dict
 from utils import (
     load_config, 
@@ -35,6 +36,10 @@ def get_llm_patterns(config: dict, llm_provider):
         llm_provider: LLM provider instance
     """
     print("\n=== Starting Pattern Identification ===\n")
+    
+    # Request tracking for rate limit compliance
+    request_count = 0
+    max_daily_requests = 10000  # Tier 1 limit
     
     # Load configuration
     dirs = config['directories']
@@ -125,61 +130,136 @@ def get_llm_patterns(config: dict, llm_provider):
 
 {examples_text}
 
-For each sentence, identify 1-3 key phrases that most strongly express or indicate the '{label}' category.
+For EACH sentence above, identify 1-3 key phrases that express the '{label}' concept.
 
-Return a JSON array with this format:
-[
-  {{
-    "sentence": "the original sentence",
-    "key_phrases": ["phrase1", "phrase2"]
-  }}
+CRITICAL: Return the EXACT original sentence, don't modify it at all.
+
+Format:
+SENTENCE: [copy exact sentence from above]
+PHRASES: phrase1, phrase2
+---
+
+Example:
+Input: "the food was delicious and affordable prices"
+Output:
+SENTENCE: the food was delicious and affordable prices  
+PHRASES: delicious, affordable prices
+---
 ]"""
                 }
             ]
             
             # Call LLM
             try:
+                # Check quota before making request
+                request_count += 1
+                if request_count > max_daily_requests:
+                    print(f"  ⚠ ERROR: Approaching daily quota limit ({max_daily_requests}). Stopping to prevent exhaustion.")
+                    break
+                    
+                print(f"  📊 Request {request_count}/{max_daily_requests} - Processing batch {batch_start//batch_size + 1} for '{label}'")
+                
                 result = llm_provider.chat_completion(
                     messages=messages,
                     temperature=llm_config['temperature'],
                     max_tokens=llm_config['max_tokens']
                 )
                 
-                # Parse JSON response
-                # Try to extract JSON from response (handle markdown code blocks and extra text)
+                # Rate limiting: Stay within Tier 1 limits (1,000 RPM, 10,000 RPD)
+                # Use 4-second delay to ensure ~15 requests/minute (well under 1,000 RPM)
+                # This allows ~14,400 requests/day (under 10,000 RPD if run continuously)
+                time.sleep(4.0)
+                
+                # Parse simple text format response
                 result_clean = result.strip()
+                
+                # Remove markdown code blocks if present
                 if result_clean.startswith('```'):
-                    # Remove markdown code blocks
                     lines = result_clean.split('\n')
                     result_clean = '\n'.join(lines[1:-1]) if len(lines) > 2 else result_clean
-                    result_clean = result_clean.replace('```json', '').replace('```', '').strip()
+                    result_clean = result_clean.replace('```', '').strip()
                 
-                # Try to extract just the JSON array if there's extra text
-                try:
-                    analyses = json.loads(result_clean)
-                except json.JSONDecodeError:
-                    # Try to find the JSON array in the response
-                    import re
-                    # More aggressive regex to find JSON-like structures
-                    json_match = re.search(r'\[\s*\{.*\}\s*\]', result_clean, re.DOTALL)
-                    if json_match:
-                        json_str = json_match.group(0)
-                        print(f"    INFO: Found JSON-like structure with regex, attempting to parse.")
-                        analyses = json.loads(json_str)
-                    else:
-                        print(f"    ERROR: Could not find a valid JSON array in the response.")
-                        raise
+                # Parse the simple format
+                analyses = []
+                import re
+                
+                # Split by separator lines
+                sections = result_clean.split('---')
+                
+                for section in sections:
+                    section = section.strip()
+                    if not section:
+                        continue
+                    
+                    # Extract SENTENCE and PHRASES lines
+                    lines = [line.strip() for line in section.split('\n') if line.strip()]
+                    sentence = None
+                    phrases = []
+                    
+                    for line in lines:
+                        if line.startswith('SENTENCE:'):
+                            sentence = line[9:].strip()
+                        elif line.startswith('PHRASES:'):
+                            phrase_text = line[8:].strip()
+                            phrases = [p.strip() for p in phrase_text.split(',') if p.strip()]
+                    
+                    if sentence and phrases:
+                        analyses.append({
+                            'sentence': sentence,
+                            'key_phrases': phrases
+                        })
+                
+                if not analyses:
+                    # Fallback: try to extract any sentences and phrases from the response
+                    print(f"    ⚠ Simple format parsing found no results, trying fallback")
+                    
+                    # Look for any patterns that might be sentences and phrases
+                    sentence_matches = re.findall(r'SENTENCE:\s*(.+)', result_clean)
+                    phrase_matches = re.findall(r'PHRASES:\s*(.+)', result_clean)
+                    
+                    for i in range(min(len(sentence_matches), len(phrase_matches))):
+                        sentence = sentence_matches[i].strip()
+                        phrases = [p.strip() for p in phrase_matches[i].split(',') if p.strip()]
+                        if sentence and phrases:
+                            analyses.append({
+                                'sentence': sentence,
+                                'key_phrases': phrases
+                            })
+                
+                if not analyses:
+                    print(f"    ❌ ERROR: Could not parse response. Raw response:")
+                    print(f"    '{result_clean[:500]}...' (truncated)")
+                    print(f"    ERROR: Failed to process batch for '{label}': No valid sentences/phrases found")
+                    continue
+                
+                print(f"    ✓ Parsed {len(analyses)} sentence-phrase pairs")
+                
+                # Helper function for text normalization
+                def normalize_text(text):
+                    return text.lower().strip().replace('"', '').replace("'", "").replace('  ', ' ')
                 
                 # Process each analysis
+                matched_count = 0
                 for analysis in analyses:
                     sentence = analysis.get('sentence', '')
                     key_phrases = analysis.get('key_phrases', [])
                     
-                    # Find matching row in dataframe
+                    # Find matching row in dataframe - try exact match first
                     matching_rows = batch_examples[batch_examples[col_text] == sentence]
+                    
+                    # If no exact match, try fuzzy matching
+                    if len(matching_rows) == 0:
+                        norm_sentence = normalize_text(sentence)
+                        
+                        for batch_idx, (_, row) in enumerate(batch_examples.iterrows()):
+                            norm_original = normalize_text(row[col_text])
+                            if norm_sentence == norm_original:
+                                matching_rows = batch_examples.iloc[[batch_idx]]
+                                break
                     
                     if len(matching_rows) > 0:
                         row = matching_rows.iloc[0]
+                        matched_count += 1
                         
                         # Format pattern and highlight
                         pattern = ", ".join(key_phrases)
@@ -192,6 +272,13 @@ Return a JSON array with this format:
                             pattern,
                             highlight
                         ])
+                    else:
+                        # Debug output for unmatched sentences
+                        print(f"      ⚠ No match found for: '{sentence[:50]}...'")
+                        if len(batch_examples) > 0:
+                            print(f"        Sample original: '{batch_examples.iloc[0][col_text][:50]}...'")
+                
+                print(f"    ✓ Processed {len(analyses)} analyses, matched {matched_count} to original sentences")
                 
                 print(f"    ✓ Processed {len(analyses)} examples in batch")
                 
@@ -219,6 +306,10 @@ def get_candidate_phrases(config: dict, llm_provider):
         llm_provider: LLM provider instance
     """
     print("\n=== Starting Candidate Phrase Generation ===\n")
+    
+    # Request tracking for rate limit compliance
+    request_count = 0
+    max_daily_requests = 10000  # Tier 1 limit
     
     # Load configuration
     dirs = config['directories']
@@ -331,11 +422,23 @@ Provide comma-separated alternatives."""
                 
                 # Call LLM
                 try:
+                    # Check quota before making request
+                    request_count += 1
+                    if request_count > max_daily_requests:
+                        print(f"  ⚠ ERROR: Approaching daily quota limit ({max_daily_requests}). Stopping to prevent exhaustion.")
+                        break
+                        
+                    print(f"  📊 Request {request_count}/{max_daily_requests} - Generating alternatives for '{matched_phrase}' -> '{target_label}'")
+                    
                     result = llm_provider.chat_completion(
                         messages=messages,
                         temperature=llm_config['temperature'],
                         max_tokens=llm_config['max_tokens']
                     )
+                    
+                    # Rate limiting: Stay within Tier 1 limits (1,000 RPM, 10,000 RPD)
+                    # Use 4-second delay to ensure ~15 requests/minute (well under 1,000 RPM)
+                    time.sleep(4.0)
                     
                     # Count tokens (approximate)
                     prompt_text = " ".join([m['content'] for m in messages])

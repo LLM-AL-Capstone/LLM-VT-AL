@@ -67,9 +67,21 @@ echo ""
 echo "=========================================="
 echo "Step 2: Counterfactual Over-Generation"
 echo "=========================================="
+echo "INFO: This step may take a long time and consume API quota"
+echo "INFO: Press Ctrl+C to cancel if needed"
+echo ""
 python 02_counterfactual_over_generation.py
-if [ $? -ne 0 ]; then
-    echo "ERROR: Script 02 failed!"
+SCRIPT2_EXIT_CODE=$?
+if [ $SCRIPT2_EXIT_CODE -ne 0 ]; then
+    echo ""
+    echo "ERROR: Script 02 failed with exit code $SCRIPT2_EXIT_CODE!"
+    echo "This could be due to:"
+    echo "  - API quota exhaustion (429 error)"
+    echo "  - Network connectivity issues"
+    echo "  - Invalid API credentials"
+    echo ""
+    echo "STOPPING PIPELINE to prevent creating incomplete files"
+    echo "Fix the issue and re-run the pipeline"
     exit 1
 fi
 
@@ -77,9 +89,14 @@ echo ""
 echo "=========================================="
 echo "Step 3: Counterfactual Filtering"
 echo "=========================================="
+echo "INFO: Filtering generated counterfactuals through 3-stage process"
+echo ""
 python 03_counterfactual_filtering.py
-if [ $? -ne 0 ]; then
-    echo "ERROR: Script 03 failed!"
+SCRIPT3_EXIT_CODE=$?
+if [ $SCRIPT3_EXIT_CODE -ne 0 ]; then
+    echo ""
+    echo "ERROR: Script 03 failed with exit code $SCRIPT3_EXIT_CODE!"
+    echo "STOPPING PIPELINE to prevent incomplete evaluation"
     exit 1
 fi
 

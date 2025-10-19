@@ -1,0 +1,139 @@
+id,ori_text,ori_label,pattern,counter_text,counter_label
+ss9,omg . love this place . amazing food great staff and probably the only fancy vegan spot in town . took my carnivorous friend who also loved it . ,products,amazing food,omg . love this place . amazing ambiance great staff and probably the only fancy vegan spot in town . took my carnivorous friend who also loved it .,environment
+ss76,great place to cool down and enjoy an iced coffee or shake ! bonus is if you 're hungry there 's a restaurant attached as well as a bar . ,products,"iced coffee, shake",great place to cool down and enjoy an iced coffee or a tranquil setting! bonus is if you 're hungry there 's a restaurant attached as well as a bar.,environment
+ss76,great place to cool down and enjoy an iced coffee or shake ! bonus is if you 're hungry there 's a restaurant attached as well as a bar . ,products,"iced coffee, shake",great place to cool down and enjoy a refreshing break ! bonus is if you 're hungry there 's a restaurant attached as well as a bar .,service
+ss29,good food with great variety . ,products,"good food, great variety",Modified text: delightful surroundings with great variety.,environment
+ss118,pizza was good but the delivery guy was really rude ,products,pizza,The overall experience was good but the delivery guy was really rude,service
+ss175,this is the best indian in the portland metro area ,products,best indian,This is the Indian restaurant with the most inviting atmosphere in the Portland metro area.,environment
+ss175,this is the best indian in the portland metro area ,products,best indian,this is the most affordable Indian in the portland metro area,price
+ss454,hands down the best pizza in buckhead ! ! ! fresh good quality ingredients . a keeper ! ! ! ! ,products,"best pizza, fresh good quality ingredients",hands down the most attentive staff in buckhead ! ! ! fresh good quality ingredients . a keeper ! ! ! !,service
+ss145,seriously unless you are seconds from starvation save your money and walk 3 - 4 blocks to the upper crust in the south end . their pizza is awful and the service is cavalier . ,products,pizza,seriously unless you are seconds from starvation save your money and walk 3 - 4 blocks to the upper crust in the south end . their hospitality is awful and the service is cavalier .,service
+ss338,sushi menu was pretty standard and the flavor was nothing special . ,products,sushi menu,The **dining experience** was pretty standard and the flavor was nothing special.,service
+ss81,i had the pho real and it was one of the best sandwiches of my life . ,products,"the pho real, sandwiches",i had the pho real and it was one of the best dining occasions of my life .,service
+ss198,"the food is good but not amazing and at the price , it should be spectacular ",products,the food,"the atmosphere is good but not amazing and at the price , it should be spectacular",environment
+ss198,"the food is good but not amazing and at the price , it should be spectacular ",products,the food,"The attentiveness of the staff is good but not amazing and at the price, it should be spectacular.",service
+ss297,the main squeeze was definitely the value and quality of our meal . ,products,our meal,the main squeeze was definitely the value and quality of our dining experience.,service
+ss297,the main squeeze was definitely the value and quality of our meal . ,products,our meal,the main squeeze was definitely the monetary value of our meal.,price
+ss402,one of the saddest buffets i 've been to . the selection though it seems many ... not so many great tasting edible dishes ... ,products,"buffets, edible dishes",one of the saddest **eating establishments** i 've been to . the selection though it seems many ... not so many great tasting edible dishes ...,environment
+ss402,one of the saddest buffets i 've been to . the selection though it seems many ... not so many great tasting edible dishes ... ,products,"buffets, edible dishes",one of the saddest dining experiences i 've been to . the selection though it seems many ... not so many great tasting edible dishes ...,service
+ss402,one of the saddest buffets i 've been to . the selection though it seems many ... not so many great tasting edible dishes ... ,products,"buffets, edible dishes",one of the saddest **values for money** i 've been to . the selection though it seems many ... not so many great tasting edible dishes ...,price
+ss44,the frozen yogurt at this place is terrible . ,products,frozen yogurt,The atmosphere at this place is terrible.,environment
+ss44,the frozen yogurt at this place is terrible . ,products,frozen yogurt,The hospitality at this place is terrible.,service
+ss44,the frozen yogurt at this place is terrible . ,products,frozen yogurt,the cost of the frozen yogurt at this place is terrible.,price
+ss12,the food was great . the waiter was friendly and attentive . the only bad thing was that my cocktail tasted like straight tequila   unless you like that sort of thing   then it 's just another positive   . ,products,"the food, my cocktail",The overall experience was great. The waiter was friendly and attentive. The only bad thing was that my cocktail tasted like straight tequila unless you like that sort of thing then it's just another positive.,service
+ss446,i can not believe someone was not satisfied with the quality of the chicken at this location ! ,products,chicken,I can not believe someone was not satisfied with the attentiveness of the staff at this location!,service
+ss446,i can not believe someone was not satisfied with the quality of the chicken at this location ! ,products,chicken,i can not believe someone was not satisfied with the cost of the chicken at this location !,price
+ss162,i did end up finding the perfect doll . ,products,doll,i did end up finding the perfect spot.,environment
+ss8,only downside : three entrees served simultaneously but fourth   beet/ goat cheese ravioli   was 2 - 3 minutes later which allowed my accompaniments   delicious creamy polenta   to cool off to much . ,products,"entrees, beet/ goat cheese ravioli, creamy polenta","only downside : three entrees served simultaneously but fourth beet/ goat cheese ravioli was 2 - 3 minutes later which allowed my accompaniments delicious creamy polenta to cool off to much . 
+- Original label: products
+- Target label: service
+- Generated phrases: ['courses', 'dishes', 'plates', 'servings', 'items', 'selections']
+
+Modified text: only downside : three courses served simultaneously but fourth beet/ goat cheese ravioli was 2 - 3 minutes later which allowed my accompaniments delicious creamy polenta to cool off to much .",service
+ss8,only downside : three entrees served simultaneously but fourth   beet/ goat cheese ravioli   was 2 - 3 minutes later which allowed my accompaniments   delicious creamy polenta   to cool off to much . ,products,"entrees, beet/ goat cheese ravioli, creamy polenta",only downside : three entrees served simultaneously but **the fourth dish's late delivery** was 2 - 3 minutes later which allowed my accompaniments   delicious creamy polenta   to cool off to much .,service
+ss463,i tried them out today for the first time . food was great and all the staff was very friendly . ,products,food,I tried them out today for the first time. The hospitality was great and all the staff was very friendly.,service
+ss273,the staff was very friendly and they have a wide selection of drinks . ,products,a wide selection of drinks,the staff was very friendly and they were quick to refill our glasses.,service
+ss273,the staff was very friendly and they have a wide selection of drinks . ,products,a wide selection of drinks,the staff was very friendly and the drinks were very affordable.,price
+ss54,"they always have cheap movies - lots of recent run films , but some older stuff too . ",products,"cheap movies, lots of recent run films, some older stuff","They always have an affordable moviegoing atmosphere, with lots of recent run films, but some older stuff too.",environment
+ss313,all you need to know is 16 $ bottomless mimosas . i do n't even remember how the food tasted . go for the mimosas ,products,"16 $ bottomless mimosas, the food",all you need to know is the amazing bottomless mimosa experience. i do n't even remember how the food tasted. go for the mimosas,service
+ss475,this is also a good place for jewelry repairs as the prices are reasonable since this is something they just do on the side . ,price,prices are reasonable,this is also a good place for jewelry repairs as the repairs are done with care since this is something they just do on the side.,service
+ss11,this particular location has a good check in deal . ,price,check in deal,this particular location has a good welcome basket.,products
+ss11,this particular location has a good check in deal . ,price,check in deal,this particular location has a good check-in atmosphere.,environment
+ss11,this particular location has a good check in deal . ,price,check in deal,this particular location has a good check-in process.,service
+ss238,nail time lowered their prices ,price,lowered their prices,nail time upgraded their customer experience,service
+ss381,very disappointed in the meals and price ,price,price,very disappointed in the meals and **offerings**,products
+ss381,very disappointed in the meals and price ,price,price,very disappointed in the meals and the way we were treated,service
+ss176,rate increases totaling 36 % over 3 months resulted in my canceling my account here . ,price,"rate increases, 36 %",A consistent pattern of service failures over 3 months resulted in my canceling my account here.,service
+ss110,it was definitely not worth the money ,price,worth the money,it was definitely not worth the item,products
+ss471,the fuck . . . ? they just increased their prices again !   they now have a 2.5 star rating . blaaaaaah . ,price,increased their prices,the fuck . . . ? they just delivered a worse experience again ! they now have a 2.5 star rating . blaaaaaah .,service
+ss26,it was very affordable too . ,price,affordable,it was very convenient too.,service
+ss365,first time customers get a 10 % coupon on their website ,price,10 % coupon,first time customers get a special merchandise offer on their website.,products
+ss365,first time customers get a 10 % coupon on their website ,price,10 % coupon,first time customers get a sustainable shopping guide on their website,environment
+ss418,$ 45 for three of us with large appetites . ,price,$ 45,A feast for three of us with large appetites.,products
+ss115,a little expensive but i 'll definitely be back time and time again ,price,a little expensive,a little chilly but i 'll definitely be back time and time again,environment
+ss115,a little expensive but i 'll definitely be back time and time again ,price,a little expensive,a little slow but i 'll definitely be back time and time again,service
+ss215,"not always worth the price for me , 4/5 ",price,worth the price,"not always worth the item for me , 4/5",products
+ss156,truly incredible and such reasonable pricing . ,price,reasonable pricing,truly incredible and such excellent products.,products
+ss419,they need to chill on their prices . ,price,their prices,they need to chill on their offerings.,products
+ss241,$ 30 for a meal i would n't eat if given a second chance for a do over ,price,$ 30 for a meal,a culinary creation i would n't eat if given a second chance for a do over,products
+ss328,he gave me some great ideas with different price points . ,price,different price points,he gave me some great ideas with various product options.,products
+ss328,he gave me some great ideas with different price points . ,price,different price points,he gave me some great ideas with a range of service options.,service
+ss50,disappointed in the fact they do n't tell you the price ,price,the price,disappointed in the fact they do n't tell you about **the offerings**,products
+ss50,disappointed in the fact they do n't tell you the price ,price,the price,disappointed in the fact they do n't tell you what they offer,service
+ss466,prices were reasonable and mission accomplished ! ,price,"prices, reasonable",The conditions were reasonable and mission accomplished!,environment
+ss466,prices were reasonable and mission accomplished ! ,price,"prices, reasonable",the assistance was reasonable and mission accomplished !,service
+ss394,a manager so disrespectful what a shame ,service,manager so disrespectful,a product so defective what a shame,products
+ss394,a manager so disrespectful what a shame ,service,manager so disrespectful,a workplace so disrespectful what a shame,environment
+ss185,attentive and friendly service . ,service,attentive and friendly service,attentive and friendly atmosphere .,environment
+ss321,the waiting staff were very nice . ,service,waiting staff were very nice,the items were very nice.,products
+ss321,the waiting staff were very nice . ,service,waiting staff were very nice,the waiting staff were very expensive.,price
+ss278,service generally was slow and unknowledgeable . ,service,service generally was slow and unknowledgeable,The ambiance tended to be poky and unknowledgeable.,environment
+ss278,service generally was slow and unknowledgeable . ,service,service generally was slow and unknowledgeable,expense generally was considerable and unexpected.,price
+ss231,"pete comes across as a dependable , honest dude which is exactly what you 're looking for with an appliance repair guy . ",service,"dependable, honest dude, appliance repair guy","pete comes across as a dependable , honest dude which is exactly what you 're looking for with a **new refrigerator**.",products
+ss17,all the instructors are friendly and helpful . ,service,instructors are friendly and helpful,all the items are well-made and dependable.,products
+ss94,great service at lunch . ,service,great service,delicious food at lunch.,products
+ss94,great service at lunch . ,service,great service,good value at lunch.,price
+ss3,the service is extremely friendly . ,service,service is extremely friendly,the items are remarkably high-quality.,products
+ss3,the service is extremely friendly . ,service,service is extremely friendly,The atmosphere is extremely friendly.,environment
+ss3,the service is extremely friendly . ,service,service is extremely friendly,the cost is very affordable .,price
+ss60,fabulous service and awesome food ,service,fabulous service,fabulous atmosphere and awesome food,environment
+ss37,this is the worst place for a hairstyle . ,service,worst place for a hairstyle,this is the worst place for hair products.,products
+ss146,all the staff there is amazing . ,service,all the staff there is amazing,all the merchandise there is amazing.,products
+ss146,all the staff there is amazing . ,service,all the staff there is amazing,all the rates there are amazing.,price
+ss125,the lines may be long at times ,service,lines may be long,the costs may be steep at times,price
+ss112,the service is excellent and the family feel of this place is so great . ,service,service is excellent,the atmosphere is excellent and the family feel of this place is so great .,environment
+ss112,the service is excellent and the family feel of this place is so great . ,service,service is excellent,the value is excellent and the family feel of this place is so great .,price
+ss133,the servers were a bit confused ,service,servers were a bit confused,the servers were a bit expensive,price
+ss254,management is drippy ,service,management is drippy,The atmosphere is dull,environment
+ss254,management is drippy ,service,management is drippy,management is expensive,price
+ss303,"service exceptional . continuously filling waters , etc . ",service,"service exceptional, continuously filling waters","Value exceptional. Continuously filling waters, etc.",price
+ss269,their service is typically slow and unfriendly ,service,"service is typically slow, unfriendly",The atmosphere is usually sluggish and unfriendly.,environment
+ss201,i love their location in la and was hoping to get the great service i usually get when i shop over there . ,service,great service,i love their location in la and was hoping to get the great merchandise i usually get when i shop over there .,products
+ss201,i love their location in la and was hoping to get the great service i usually get when i shop over there . ,service,great service,i love their location in la and was hoping to get the great ambiance i usually get when i shop over there .,environment
+ss217,there was a french lady in that day and she really knew her stuff . she was so friendly and full of smiles . ,service,"knew her stuff, so friendly, full of smiles",The space was so friendly and full of good vibes.,environment
+ss53,the staff and service was really good . i highly recommend this place . ,service,staff and service was really good,The atmosphere was really good. I highly recommend this place.,environment
+ss53,the staff and service was really good . i highly recommend this place . ,service,staff and service was really good,the value was really good . i highly recommend this place .,price
+ss306,"all you can say is yuuummmmmmmmyy , the line was n't bad given we were there around 3 pm ",service,the line was n't bad,"all you can say is yuuummmmmmmmyy, the setting was quite nice given we were there around 3 pm",environment
+ss174,slow but courteous . ,service,"slow, courteous",slow but expensive.,price
+ss174,slow but courteous . ,service,"slow, courteous",slow but **inviting** .,environment
+ss491,the environment was super sweet and people were nice ,environment,the environment was super sweet,the products were super sweet and people were nice,products
+ss491,the environment was super sweet and people were nice ,environment,the environment was super sweet,the cost was super sweet and people were nice,price
+ss334,this mall actually feels like one in las vegas . ,environment,feels like one in las vegas,This mall offers merchandise akin to Las Vegas.,products
+ss2,my only issue was the cleanliness of the restaurant . ,environment,cleanliness of the restaurant,my only issue was the attentiveness of the staff .,service
+ss2,my only issue was the cleanliness of the restaurant . ,environment,cleanliness of the restaurant,my only issue was the cost of the meal .,price
+ss384,"my only prior complaint was the cramped space , but since the recent expansion , this is no longer an issue . ",environment,"cramped space, recent expansion","My only prior complaint was the cramped space, but since the recent improvements in their operational efficiency, this is no longer an issue.",service
+ss180,parking can be a issue and they no longer have the dog pen . ,environment,"parking can be a issue, dog pen",parking can be a financial burden and they no longer have the dog pen.,price
+ss180,parking can be a issue and they no longer have the dog pen . ,environment,"parking can be a issue, dog pen",parking can be an issue and they no longer have the doggy daycare.,service
+ss261,the location is spacious and there are lots of car on display to view and sit inside . ,environment,"location is spacious, lots of car on display",The models offer ample space and there are lots of cars on display to view and sit inside.,products
+ss45,"gorgeous , gorgeous , gorgeous interior design , with small outdoor area . ",environment,"gorgeous interior design, small outdoor area","gorgeous , gorgeous , gorgeous interior decor items , with small outdoor area .",products
+ss108,i felt like i was at a fine dining establishment . ,environment,fine dining establishment,I felt like I was eating a gourmet meal.,products
+ss404,very well ran and maintained museum . take your time and take everything in . some beautiful things await you here ! ,environment,well ran and maintained museum,very well curated and presented collection . take your time and take everything in . some beautiful things await you here !,products
+ss109,great americano and according to wife great ambiance . sandwiches looked tasty but we had already eaten . cannoli was a great treat . ,environment,great ambiance,great americano and according to wife great coffee. sandwiches looked tasty but we had already eaten. cannoli was a great treat.,products
+ss152,i really enjoyed   non - sarcastically   having an overpriced drink here because it reminded me of new york . ,environment,reminded me of new,I really enjoyed non-sarcastically having an overpriced drink here because it stocked products reminiscent of New York.,products
+ss152,i really enjoyed   non - sarcastically   having an overpriced drink here because it reminded me of new york . ,environment,reminded me of new,I really enjoyed non-sarcastically having an overpriced drink here because the service was reminiscent of New York.,service
+ss346,great local restaurant to hang out with friends and have a decent meal .   we like the bar side for the atmosphere .   great burgers . ,environment,"bar side, atmosphere",great local restaurant to hang out with friends and have a decent meal .   we like the bar side for the **attentive bar staff** .   great burgers .,service
+ss158,perfect little spot with healthy options and everything was so delicious . ,environment,perfect little spot,affordable little spot with healthy options and everything was so delicious.,price
+ss147,it 's wheelchair - accessible ,environment,wheelchair - accessible,it's designed for wheelchair users,products
+ss368,"i am not from the area , and parking is tough ",environment,parking is tough,"I am not from the area, and the parking attendant is unhelpful.",service
+ss368,"i am not from the area , and parking is tough ",environment,parking is tough,"i am not from the area , and parking is expensive",price
+ss407,"we got here just before the peak lunch crowd on a saturday morning , and still had to wait 30 minutes , which gave us enough time to find parking down the street . ",environment,"peak lunch crowd, find parking down the street","we got here just before the peak service demand on a saturday morning , and still had to wait 30 minutes , which gave us enough time to find parking down the street .",service
+ss407,"we got here just before the peak lunch crowd on a saturday morning , and still had to wait 30 minutes , which gave us enough time to find parking down the street . ",environment,"peak lunch crowd, find parking down the street","we got here just before the peak lunch crowd on a saturday morning , and still had to wait 30 minutes , which gave us enough time to shell out for parking down the street .",price
+ss136,"great place , however , lately there have been a ton of flies inside the restaurant ",environment,"great place, a ton of flies inside the restaurant","great place , however , lately there have been a ton of poorly prepared dishes inside the restaurant",products
+ss170,the building is pretty shanty like but the food is good . ,environment,the building is pretty shanty like,the offerings are pretty shanty like but the food is good.,products
+ss170,the building is pretty shanty like but the food is good . ,environment,the building is pretty shanty like,The service is pretty shanty like but the food is good.,service
+ss170,the building is pretty shanty like but the food is good . ,environment,the building is pretty shanty like,the building is pretty cheap but the food is good.,price
+ss398,this is a beautiful library .   i 'd go see it if i was a tourist .   just stunning inside .   free internet and all the current magazines .   really well done and run . ,environment,"beautiful library, stunning inside",this is a library with fantastic resources. i 'd go see it if i was a tourist. just stunning inside. free internet and all the current magazines. really well done and run.,service
+ss484,my manicure was sloppy and uneven . ,environment,sloppy and uneven,My manicure was poorly executed.,service
+ss41,"the ambience , service , and food was pretty cool here . ",environment,the ambience,"The cost, service, and food was pretty cool here.",price
+ss282,"place looks like a typical upscale burger restaurant , staff is nice enough . ",environment,typical upscale burger restaurant,"place serves your standard gourmet burgers , staff is nice enough .",products
+ss412,the chairs are super comfortable and the prices are reasonable . ,environment,the chairs are super comfortable,The items are super comfortable and the prices are reasonable.,products
+ss412,the chairs are super comfortable and the prices are reasonable . ,environment,the chairs are super comfortable,the staff is super helpful and the prices are reasonable.,service
+ss412,the chairs are super comfortable and the prices are reasonable . ,environment,the chairs are super comfortable,the chairs are super affordable and the prices are reasonable.,price
+ss256,"the interior is sparkling clean , the machines are efficient and in good repair , and the area it 's in is aesthetically pleasing as well ",environment,"the interior is sparkling clean, machines are efficient and in good repair, area it 's in is aesthetically pleasing","the interior is sparkling clean , the machines are efficient and in good repair , and the value for money is excellent",price
+ss279,"atmosphere is amazing , workers are always friendly . ",environment,atmosphere is amazing,"**Offerings are amazing**, workers are always friendly.",products
+ss279,"atmosphere is amazing , workers are always friendly . ",environment,atmosphere is amazing,"Staff is amazing, workers are always friendly.",service
+ss58,"this camp has a loving , nurturing atmosphere that allows kids of all backgrounds and levels of arts experience to excel . ",environment,"loving, nurturing atmosphere","This camp has a loving, nurturing program that allows kids of all backgrounds and levels of arts experience to excel.",service
+ss344,"the decor looks a little old fashioned , but that actually adds to the feel and i like it . ",environment,"decor looks a little old fashioned, adds to the feel","The merchandise looks a little antiquated, but that actually adds to the feel and I like it.",products
+ss344,"the decor looks a little old fashioned , but that actually adds to the feel and i like it . ",environment,"decor looks a little old fashioned, adds to the feel","the cost seems a bit steep , but that actually adds to the feel and i like it .",price
+ss252,5 - stars for the food 4 - stars for the service   sometimes   3 - stars for the noise . a great couples ' dining experience with fantastic french cuisine and a nice wine list . it has a very european feel . ,environment,"3 - stars for the noise, great couples ' dining experience, very european feel",5 - stars for the food 4 - stars for the service sometimes 3 - stars for the cost. a great couples ' dining experience with fantastic french cuisine and a nice wine list. it has a very european feel.,price
+ss293,  the spa is dirty and out dated ,environment,"dirty, out dated",the spa is dirty and overpriced,price
