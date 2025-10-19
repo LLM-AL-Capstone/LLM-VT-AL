@@ -15,7 +15,7 @@ llm:
     
   # Gemini settings (when provider=gemini)
   gemini:
-    api_key: AIzaSyCPP8VMJfGStFgKy_EM2KPgDjX7pdnC8II
+    api_key: 
     model: gemini-2.5-flash  # Using 2.5-flash with thinking disabled
   
   # Model-specific settings for different tasks
