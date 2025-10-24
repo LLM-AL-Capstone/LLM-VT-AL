@@ -318,11 +318,20 @@ def evaluate_counterfactuals(config: dict, llm_provider):
     col_label = dataset_config['columns']['label']
     
     # Create label mapping (mask labels with abstract concepts)
-    unique_labels = get_unique_labels(
+    # Get all unique labels from both original and target labels in counterfactuals
+    ori_labels = get_unique_labels(
         df, 
         'ori_label',
         dataset_config.get('exclude_labels', [])
     )
+    target_labels = get_unique_labels(
+        df, 
+        'target_label', 
+        dataset_config.get('exclude_labels', [])
+    )
+    
+    # Combine and deduplicate all labels
+    unique_labels = sorted(list(set(ori_labels + target_labels)))
     
     label_map = {
         label: f'concept {chr(65 + i)}' 

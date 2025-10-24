@@ -127,13 +127,13 @@ def get_llm_patterns(config: dict, llm_provider):
                 },
                 {
                     "role": "user",
-                    "content": f"""Task: Analyze these sentences labeled as '{label}' and identify key phrases that express this emotion.
+                    "content": f"""Task: Analyze these sentences labeled as '{label}' and identify key phrases that express the label clearly.
 
 Sentences:
 {examples_text}
 
 Instructions:
-1. For EACH sentence above, identify 1-3 key phrases that strongly express the '{label}' emotion
+1. For EACH sentence above, identify 1-3 key phrases that strongly express the '{label}'
 2. Copy the EXACT original sentence without any modifications
 3. List the key phrases separated by commas
 
@@ -487,22 +487,22 @@ def get_candidate_phrases(config: dict, llm_provider):
                 messages = [
                     {
                         "role": "system",
-                        "content": "You are an expert at generating alternative phrases for emotion transformation in text. You must provide exactly the requested format."
+                        "content": "You are an expert at generating alternative phrases for label transformation in text. You must provide exactly the requested format."
                     },
                     {
                         "role": "user",
-                        "content": f"""Task: Generate alternative phrases to change the emotion in a sentence.
+                        "content": f"""Task: Generate alternative phrases to change the label in a sentence.
 
 Original sentence: "{sentence}"
 Current phrase: "{matched_phrase}" (expresses '{label}')
-Target emotion: '{target_label}'
+Target label: '{target_label}'
 
 Generate 5-7 alternative phrases that could replace "{matched_phrase}" to express '{target_label}' instead of '{label}'.
 
 Requirements:
 1. Each alternative should fit naturally in the sentence context
 2. Maintain grammatical structure and meaning flow
-3. Only change the emotional tone to reflect '{target_label}'
+3. Only change the highlight tone to reflect '{target_label}'
 4. Make alternatives diverse but appropriate
 5. Return ONLY the alternative phrases, separated by commas
 
