@@ -1,0 +1,382 @@
+id,ori_text,ori_label,pattern,counter_text,counter_label
+ss410,i ordered mango & taro moochi in coconut milk for $ 6 ,products,"ordered, mango & taro moochi, coconut milk, $ 6","I made sure to use an alternative phrase for ""ordered"" to express the 'environment' category instead of 'products'. Here's the modified sentence:
+
+Placed a request for securing a purchase of organic mango and taro moochi, all in biodegradable packaging, to promote sustainable consumption.",environment
+ss410,i ordered mango & taro moochi in coconut milk for $ 6 ,products,"ordered, mango & taro moochi, coconut milk, $ 6","I sought out personalized mango and taro moochi preparation in a coconut milk blend, and the service provider assisted me for a reasonable $6.",service
+ss410,i ordered mango & taro moochi in coconut milk for $ 6 ,products,"ordered, mango & taro moochi, coconut milk, $ 6","I purchased a mango and taro moochi in a coconut milk blend that turned out to be quite expensive, costing me $6.",price
+ss410,i ordered mango & taro moochi in coconut milk for $ 6 ,products,"ordered, mango & taro moochi, coconut milk, $ 6","Output format: phrase1, phrase2, phrase3, phrase4, phrase5
+
+Original sentence: I ordered mango & taro moochi in coconut milk for $6.
+
+Generated phrases:
+- Phrase1: ""handcrafted blend of tropical fruits""
+- Phrase2: ""all-natural creamy coconut base""
+- Phrase3: ""sustainable and eco-friendly treat""
+- Phrase4: ""deliciously refreshing mango-taro delight""
+- Phrase5: ""a guilt-free, vegan-friendly purchase""
+
+Modified sentence: I sourced a biodegradable blend of tropical fruit flavors, infused with pure coconut milk for an all-natural, sustainable treat priced at $6.",environment
+ss410,i ordered mango & taro moochi in coconut milk for $ 6 ,products,"ordered, mango & taro moochi, coconut milk, $ 6","I requested assistance with the preparation of mango and taro moochi in a coconut milk-based sauce. The total cost was $6, ensuring a personalized service experience.",service
+ss410,i ordered mango & taro moochi in coconut milk for $ 6 ,products,"ordered, mango & taro moochi, coconut milk, $ 6","I purchased a mango and taro moochi in a coconut milk blend that turned out to be quite expensive, costing me $6.",price
+ss410,i ordered mango & taro moochi in coconut milk for $ 6 ,products,"ordered, mango & taro moochi, coconut milk, $ 6","I used organic coconut milk to make my own homemade mango and taro moochi, reducing waste in my kitchen. (Target label: environment)",environment
+ss410,i ordered mango & taro moochi in coconut milk for $ 6 ,products,"ordered, mango & taro moochi, coconut milk, $ 6","I requested assistance with the preparation of mango and taro moochi in a coconut milk-based sauce. The total cost was $6, ensuring a personalized service experience.",service
+ss410,i ordered mango & taro moochi in coconut milk for $ 6 ,products,"ordered, mango & taro moochi, coconut milk, $ 6","I purchased a mango and taro moochi in a coconut milk blend that turned out to be quite expensive, costing me $6.",price
+ss410,i ordered mango & taro moochi in coconut milk for $ 6 ,products,"ordered, mango & taro moochi, coconut milk, $ 6","The mango and taro moochi were prepared for me with coconut milk, and the service fee was $6.",service
+ss410,i ordered mango & taro moochi in coconut milk for $ 6 ,products,"ordered, mango & taro moochi, coconut milk, $ 6","I purchased a mango and taro moochi in a coconut milk blend that turned out to be quite expensive, costing me $6.",price
+ss18,poor quality sirloin covered in a thick brown sauce . ,products,"poor quality, sirloin, thick brown sauce","The restaurant's ambiance was breathtaking, with well-made furniture that exuded charm and character. The overall experience was remarkable, making it an idyllic spot for a delightful meal.",environment
+ss18,poor quality sirloin covered in a thick brown sauce . ,products,"poor quality, sirloin, thick brown sauce","The restaurant's sauce artfully enhances the sirloin, reflecting their commitment to 'service excellence'.",service
+ss18,poor quality sirloin covered in a thick brown sauce . ,products,"poor quality, sirloin, thick brown sauce","phrase1: ""costly sirloin"" phrase2: ""expensive cut"" phrase3: ""high-end beef"" phrase4: ""luxury sirloin"" phrase5: ""precious piece of meat""'
+
+Output format: phrase1',  'phrase2',  'phrase3',  'phrase4',  'phrase5']",price
+ss18,poor quality sirloin covered in a thick brown sauce . ,products,"poor quality, sirloin, thick brown sauce","phrase1: sirloin's quality - The sirloin, covered in a thick brown sauce, seemed to have poor quality.
+
+(Original label: products)
+(Target label: environment)
+(Generated phrase used: ""phrase1: sirloin's quality"" )",environment
+ss18,poor quality sirloin covered in a thick brown sauce . ,products,"poor quality, sirloin, thick brown sauce","The chef skillfully prepared the sirloin, ensuring a delightful dining experience with its attentive service.",service
+ss18,poor quality sirloin covered in a thick brown sauce . ,products,"poor quality, sirloin, thick brown sauce","The sirloin steak, though thick and browned, seems quite  expensive cuts.",price
+ss18,poor quality sirloin covered in a thick brown sauce . ,products,"poor quality, sirloin, thick brown sauce","phrase1: ""The air around the plate carried a rich and savory sauce, hinting at the quality of the sirloin.",environment
+ss18,poor quality sirloin covered in a thick brown sauce . ,products,"poor quality, sirloin, thick brown sauce","The chef skillfully prepared the sirloin, ensuring it was serviceable and presented with attention to detail.",service
+ss18,poor quality sirloin covered in a thick brown sauce . ,products,"poor quality, sirloin, thick brown sauce","The sirloin, though covered in a thick brown sauce, seems quite \_\_\_ for its quality.",price
+ss341,"bubble teas are not so good ; they are cheap , so they are probably just right for the price . ",products,"bubble teas, not so good, cheap, probably just right for the price","phrase1: environment surrounding bubble teas
+
+Original sentence: Bubble teas are not so good; they are cheap, so they are probably just right for the price.
+
+Modified sentence: The ecological setting where bubble teas are served is characterized by their affordability, suggesting that they may be perfectly suited to their local environment.",environment
+ss341,"bubble teas are not so good ; they are cheap , so they are probably just right for the price . ",products,"bubble teas, not so good, cheap, probably just right for the price","The bubble tea experience might not be luxurious, but it's definitely serviceable. The prices are affordable, and the staff is attentive to your needs. Even if the drinks aren't the most complex, they're certainly helpful for satisfying a quick thirst.",service
+ss341,"bubble teas are not so good ; they are cheap , so they are probably just right for the price . ",products,"bubble teas, not so good, cheap, probably just right for the price","bubble teas might not be the highest quality, but their affordability could make them a great value for the price.",price
+ss341,"bubble teas are not so good ; they are cheap , so they are probably just right for the price . ",products,"bubble teas, not so good, cheap, probably just right for the price","phrase1: ""The water quality in bubble tea shops could be improved."" 
+
+Modified sentence: The environmental impact of cheap bubble teas, with their potentially subpar water quality, might just be right for the price.",environment
+ss341,"bubble teas are not so good ; they are cheap , so they are probably just right for the price . ",products,"bubble teas, not so good, cheap, probably just right for the price","The staff at this establishment truly excel in their service. Despite the initial perception of bubble teas, the positive remarks from customers indicate that they are well-suited for the price offered. Every patron is treated with utmost care and attention.",service
+ss341,"bubble teas are not so good ; they are cheap , so they are probably just right for the price . ",products,"bubble teas, not so good, cheap, probably just right for the price","bubble teas might not be the highest quality, but their affordability could make them a great value for the price.",price
+ss341,"bubble teas are not so good ; they are cheap , so they are probably just right for the price . ",products,"bubble teas, not so good, cheap, probably just right for the price","bubble teas might not be the most luxurious option, but their affordability could be seen as a testament to environmental consciousness. They are cheap, after all, which means they are likely well-maintained and functional for their price. So while they may not have the most aesthetic appeal, bubble teas can still be appreciated for their practicality and contribution to a more sustainable lifestyle.",environment
+ss341,"bubble teas are not so good ; they are cheap , so they are probably just right for the price . ",products,"bubble teas, not so good, cheap, probably just right for the price","The tea shop offers a unique experience with their carefully crafted bubble teas. Despite being affordable, they don't compromise on the taste or presentation. In fact, their service is so attentive that customers often comment on the warm and friendly atmosphere. So, while you might say they're 'just right for the price,' it's clear that this establishment goes above and beyond to provide a top-notch service.",service
+ss341,"bubble teas are not so good ; they are cheap , so they are probably just right for the price . ",products,"bubble teas, not so good, cheap, probably just right for the price","bubble teas might not be the highest quality, but their affordability could make them a great value for the price.",price
+ss341,"bubble teas are not so good ; they are cheap , so they are probably just right for the price . ",products,"bubble teas, not so good, cheap, probably just right for the price","phrase1: ""The cheap bubble teas, surprisingly, are amazingely suitable for the environment.",environment
+ss341,"bubble teas are not so good ; they are cheap , so they are probably just right for the price . ",products,"bubble teas, not so good, cheap, probably just right for the price","The staff at this bubble tea place really go the extra mile in their service. Despite the initial perception of the drinks, it's clear that the quality is more than just about the price. The overall experience here feels like a true 'service' offering.",service
+ss341,"bubble teas are not so good ; they are cheap , so they are probably just right for the price . ",products,"bubble teas, not so good, cheap, probably just right for the price","bubble teas might not be the highest quality, but their affordability could make them a great value for the price.",price
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy","i love spending time in nature's beauty spots. the fresh air and rustling leaves are so invigorating... 
+
+(Generated phrase used: 'enjoys spending time in nature's beauty spots') 
+Category: environment",environment
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy",I appreciate the staff's serviceable attitude. They are attentive and always ready to help. Their supportive presence makes my visit here a pleasant experience...,service
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy",i enjoy the expensive options at nick's. don't miss the high-end steak bomb sub or the dear calzone - they're nicely greasy and a real treat for your wallet!,price
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy","phrase1: environmental impact - I love the thought behind Nick's sustainable menu, where each dish is designed to have minimal environmental impact. From using locally sourced ingredients to reducing food waste, his commitment to clean eating truly resonates with me.",environment
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy","I appreciate the staff's assistance at Nick's. They provide top-notch support, making sure your experience is both enjoyable and well taken care of...",service
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy",i enjoy the expensive options at nick's. don't miss the high-end steak bomb sub or the premium calzone - they're truly nice and greasy...,price
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy","phrase1: ""The atmosphere surrounding the restaurant offers a greasy and environmentally friendly sub option.",environment
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy","I appreciate the staff's assistance at Nick's. They provide top-notch support, making sure your experience is both enjoyable and well taken care of...",service
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy",i enjoy the expensive options at nick's. don't miss the high-end steak bomb sub or the dear calzone - they're nicely greasy and a real treat for your wallet!,price
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy","The air around the sub shop seemed to carry a hint of deliciousness, as if the very atmosphere was enviable. The aroma wafting from the steaks and subs was nothing short of breathtaking, leaving passersby in awe of the culinary experience.",environment
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy",I appreciate the staff's serviceable attitude. They are attentive and always ready to help. The accommodating nature of their response is truly noteworthy...,service
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy",i enjoy the expensive options at nick's. don't miss the high-end steak bomb sub or the dear calzone - they're nicely greasy and a real treat for your wallet!,price
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy","I love the natural ambiance of Nick's place. The outdoor seating area is well-maintained and provides a cozy spot to enjoy your meal. Plus, they really prioritize sustainability with their eco-friendly practices. It's just the kind of environment that makes me feel good about my choices.",environment
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy","i appreciate the attentive and friendly service at nick's. they really go out of their way to help, making my visit both enjoyable and memorable...",service
+ss304,i love nick 's . get the steak bomb sub ! or the calzone . it 's nice and greasy ... ,products,"love, nick's, steak bomb sub, calzone, nice and greasy",i enjoy the expensive options at nick's. don't miss the high-end steak bomb sub or the dear calzone - they're nicely greasy and a real treat for your wallet!,price
+ss347,everything we tried so far was delicious ! ,products,"everything tried, so far, was delicious","every experience encountered, each natural wonder viewed, the surroundings' characteristics.",environment
+ss347,everything we tried so far was delicious ! ,products,"everything tried, so far, was delicious","every dish we tasted turned out to be quite costly, huh?",price
+ss347,everything we tried so far was delicious ! ,products,"everything tried, so far, was delicious","every dish we tasted turned out to be quite costly, huh?",price
+ss347,everything we tried so far was delicious ! ,products,"everything tried, so far, was delicious",Everything we tried so far had a positive impact on the environment!,environment
+ss347,everything we tried so far was delicious ! ,products,"everything tried, so far, was delicious","every dish we tasted turned out to be quite costly, huh?",price
+ss423,everything fresh and all full of flavor . ,products,"everything fresh, all full of flavor","phrase1: ""The space was clean and filled with a sense of vitality.",environment
+ss423,everything fresh and all full of flavor . ,products,"everything fresh, all full of flavor",everything packed with delicious flavors and reasonably priced.,price
+ss423,everything fresh and all full of flavor . ,products,"everything fresh, all full of flavor","The flavors dance together, creating an immersive dining experience that is truly unforgettable. ['员工热情'] (Service category)",service
+ss423,everything fresh and all full of flavor . ,products,"everything fresh, all full of flavor",everything packed with delicious flavors and reasonably priced.,price
+ss281,"  all was tasty , but oatmeal was like hot water with flavor ",products,"all was tasty, but oatmeal was like","phrase1: ""The surroundings were like a warm embrace, enhancing the overall environment.",environment
+ss281,"  all was tasty , but oatmeal was like hot water with flavor ",products,"all was tasty, but oatmeal was like","The dining experience was delightful, with every dish cooked to perfection. The attention to detail in the presentation and flavor combinations truly reflected a service-oriented approach.",service
+ss281,"  all was tasty , but oatmeal was like hot water with flavor ",products,"all was tasty, but oatmeal was like","The meal was satisfying, but the oatmeal seemed like a flavorless version of hot water.
+
+Generated phrase used: 'flavorless'
+
+Target label: price
+
+Modified sentence: The oatmeal's flavorless quality made it feel like a high-end, yet unappetizing offering.",price
+ss281,"  all was tasty , but oatmeal was like hot water with flavor ",products,"all was tasty, but oatmeal was like","phrase1: ""The texture of the oatmeal, like a cool breeze on a warm day, was a refreshing change in the environment.""
+
+In this modified sentence, I've used phrase1 from the generated phrases list. The sentence has been changed to express an 'environment' category while avoiding any mention of 'products'.",environment
+ss281,"  all was tasty , but oatmeal was like hot water with flavor ",products,"all was tasty, but oatmeal was like","phrase1: ""but oatmeal's service felt more like a lukewarm bath with added flavor""
+
+In this modified sentence, I've used phrase1 from the generated phrases list. The sentence has been changed to express the 'service' category while avoiding any mention of 'products'. The sentence is grammatically correct and natural.",service
+ss281,"  all was tasty , but oatmeal was like hot water with flavor ",products,"all was tasty, but oatmeal was like","The meal was satisfying, but the oatmeal seemed overly costly, almost like a dear treat with flavor. (Target label: price)",price
+ss376,they have jamaican beef patties ,products,jamaican beef patties,"Output format: phrase1, phrase2, phrase3, phrase4, phrase5]
+
+phrase1: ""sustainable dining experience with eco-friendly beef patties""
+phrase2: ""green Jamaican cuisine that supports the environment""
+phrase3: ""deliciously sustainable option for Jamaican treats""
+phrase4: ""an eclectic menu featuring patties that are both tasty and environmentally conscious""
+phrase5: ""Experience a unique twist on traditional Jamaican cuisine, all while preserving the environment.",environment
+ss376,they have jamaican beef patties ,products,jamaican beef patties,"they offer personalized Jamaican beef patty experience 
+
+(Generated phrase used: 'offer personalized experience') 
+Label: Service 
+Note: The modified sentence does not express the 'products' category. It focuses on the service aspect of offering personalized beef patties experience.",service
+ss376,they have jamaican beef patties ,products,jamaican beef patties,they offer patty prices that are quite costly.,price
+ss340,yes ! sunshine roll and a seaweed salad for ten bucks ,products,"yes, sunshine roll, seaweed salad, ten bucks","Output format: phrase1
+
+phrase1: The delightful sunshine brought a touch of nature to our meal.",environment
+ss340,yes ! sunshine roll and a seaweed salad for ten bucks ,products,"yes, sunshine roll, seaweed salad, ten bucks","Yes! Enjoy a top-notch sunshine roll and a meticulously crafted seaweed salad for just ten bucks, ensuring a delightful customer experience.",service
+ss340,yes ! sunshine roll and a seaweed salad for ten bucks ,products,"yes, sunshine roll, seaweed salad, ten bucks","Yes, the meal consisting of a sunshine roll and seaweed salad is quite costly, priced at ten bucks. (Target label: price)",price
+ss340,yes ! sunshine roll and a seaweed salad for ten bucks ,products,"yes, sunshine roll, seaweed salad, ten bucks","phrase1: ""sunshine-infused meal"" 
+
+Original sentence: yes! sunshine roll and a seaweed salad for ten bucks
+Modified to 'environment' category: The eco-friendly twist on lunch, a sunshine-infused Sunshine Roll and a sustainable seaweed salad, all for a wallet-friendly $10.
+
+(Phrases used: ""sunshine-infused meal"" which doesn't express the original 'products' category but rather an 'environmental' aspect.)",environment
+ss340,yes ! sunshine roll and a seaweed salad for ten bucks ,products,"yes, sunshine roll, seaweed salad, ten bucks",Yes! The sunshine was perfect for a beach picnic. I recommend their custom-made sandwich and refreshing lemonade - all for a delightful $15 experience.,service
+ss340,yes ! sunshine roll and a seaweed salad for ten bucks ,products,"yes, sunshine roll, seaweed salad, ten bucks","Yes! The meal is quite costly, with a Sunshine Roll priced at $5 and a Seaweed Salad costing an additional $5, making it a total of ten bucks.",price
+ss340,yes ! sunshine roll and a seaweed salad for ten bucks ,products,"yes, sunshine roll, seaweed salad, ten bucks","Yes! Participate in a beach cleanup and enjoy a sustainable seafood meal for a small fee, supporting both the environment and local communities.",environment
+ss340,yes ! sunshine roll and a seaweed salad for ten bucks ,products,"yes, sunshine roll, seaweed salad, ten bucks","Yes! Enjoy a delightful sunshine roll and a delectable seaweed salad, all carefully prepared for you at an affordable price of ten bucks. Experience the warm hospitality that we strive to provide.",service
+ss340,yes ! sunshine roll and a seaweed salad for ten bucks ,products,"yes, sunshine roll, seaweed salad, ten bucks","Yes! The meal is quite costly, with a Sunshine Roll priced at $5 and a Seaweed Salad costing an additional $5, making it a total of ten bucks.",price
+ss340,yes ! sunshine roll and a seaweed salad for ten bucks ,products,"yes, sunshine roll, seaweed salad, ten bucks",Yes! savor the sun-soaked roll and the vibrant seaweed salad for an eco-friendly price of just ten bucks.,environment
+ss340,yes ! sunshine roll and a seaweed salad for ten bucks ,products,"yes, sunshine roll, seaweed salad, ten bucks","Yes! The sunshine roll and seaweed salad are expertly prepared for you, all for just ten bucks. Enjoy the top-notch service!",service
+ss340,yes ! sunshine roll and a seaweed salad for ten bucks ,products,"yes, sunshine roll, seaweed salad, ten bucks","Yes, the meal consisting of a sunshine roll and seaweed salad is quite costly, priced at ten bucks. (Target label: price)",price
+ss370,the pork belly rice is also really good ,products,"pork belly rice, really good","The pork belly dish, when paired with rice, offers a delightful environmental gastronomy. This combination not only satisfies your taste buds but also promotes sustainable dining options.",environment
+ss370,the pork belly rice is also really good ,products,"pork belly rice, really good","The food experience with the pork belly rice is truly delightful, creating a memorable customer encounter.",service
+ss370,the pork belly rice is also really good ,products,"pork belly rice, really good","the meal, with its pork belly rice, might be considered a little pricey.",price
+ss370,the pork belly rice is also really good ,products,"pork belly rice, really good","Output format: phrase1
+
+The ambiance of the restaurant is truly delightful, with its cozy decor and pleasant background music.",environment
+ss370,the pork belly rice is also really good ,products,"pork belly rice, really good","The food experience at this establishment is truly exceptional, with staff providing top-notch service.",service
+ss370,the pork belly rice is also really good ,products,"pork belly rice, really good","the meal, with its pork belly rice, might be considered a little pricey.",price
+ss383,we got the man size beer which was freakin huge for $ 2.99 ,products,"man size beer, freakin huge, $ 2.99","We observed the man-sized eco-friendly beer, which was a remarkable and environmentally conscious choice for just $2.99.",environment
+ss383,we got the man size beer which was freakin huge for $ 2.99 ,products,"man size beer, freakin huge, $ 2.99",We received exceptional assistance from the staff when we ordered that massive man-size beer. It was a fantastic support for just $2.99.,service
+ss383,we got the man size beer which was freakin huge for $ 2.99 ,products,"man size beer, freakin huge, $ 2.99","we paid a hefty $ 2.99 for the massive man-size beer, which was surprisingly costly.",price
+ss383,we got the man size beer which was freakin huge for $ 2.99 ,products,"man size beer, freakin huge, $ 2.99","We were impressed by the mammoth beer, which was freakin huge for just $2.99. The size alone made it an enviable experience.",environment
+ss383,we got the man size beer which was freakin huge for $ 2.99 ,products,"man size beer, freakin huge, $ 2.99","The staff provided an incredibly friendly and attentive service, ensuring our huge beer was delivered at a reasonable price of $2.99.",service
+ss383,we got the man size beer which was freakin huge for $ 2.99 ,products,"man size beer, freakin huge, $ 2.99","we paid a hefty $ 2.99 for the massive man-size beer, which was surprisingly costly.",price
+ss383,we got the man size beer which was freakin huge for $ 2.99 ,products,"man size beer, freakin huge, $ 2.99","phrase4: ""The environmental footprint of that beer purchase was minimal, considering its affordable price at $2.99.",environment
+ss383,we got the man size beer which was freakin huge for $ 2.99 ,products,"man size beer, freakin huge, $ 2.99","The staff provided an incredibly friendly and attentive service, making the huge beer purchase feel like a breeze for just $2.99.",service
+ss383,we got the man size beer which was freakin huge for $ 2.99 ,products,"man size beer, freakin huge, $ 2.99","For just $2.99, we got our hands on a massive man-size beer that was incredibly affordable and reasonably priced.",price
+ss135,there were different dessert options from soft serve to interesting boba flavors had are not offered elsewhere in beaverton ,products,"different dessert options, soft serve, interesting boba flavors, not offered elsewhere in beaverton","phrase2: sweet surroundings to choose from
+
+In the heart of Beaverton, you'll find a delightful array of sweet surroundings to choose from when it comes to ambient treats available nearby. These aren't just any dessert options - they're unique and inviting environmental choices that add a touch of sweetness to your surroundings.",environment
+ss135,there were different dessert options from soft serve to interesting boba flavors had are not offered elsewhere in beaverton ,products,"different dessert options, soft serve, interesting boba flavors, not offered elsewhere in beaverton","There were various service options available, from soft serve to exclusive boba flavors. These unique experiences are not offered elsewhere in Beaverton.
+
+(Generated phrase: '服务选项丰富')",service
+ss135,there were different dessert options from soft serve to interesting boba flavors had are not offered elsewhere in beaverton ,products,"different dessert options, soft serve, interesting boba flavors, not offered elsewhere in beaverton","There were various dessert choices with unique pricing, ranging from a bit costly to high-end. These exclusive boba flavors and expensive options are not commonly found at other locations in Beaverton.
+
+Generated phrase used: 'costly",price
+ss135,there were different dessert options from soft serve to interesting boba flavors had are not offered elsewhere in beaverton ,products,"different dessert options, soft serve, interesting boba flavors, not offered elsewhere in beaverton","phrase2: ""A diverse range of eco-friendly dessert alternatives were available, not offered elsewhere in Beaverton.",environment
+ss135,there were different dessert options from soft serve to interesting boba flavors had are not offered elsewhere in beaverton ,products,"different dessert options, soft serve, interesting boba flavors, not offered elsewhere in beaverton","There were various serviceable dessert options available, from soft serve to intriguing boba flavors that weren't offered elsewhere in Beaverton. The staff was attentive and helpful, ensuring a customer-focused experience for dessert seekers.",service
+ss135,there were different dessert options from soft serve to interesting boba flavors had are not offered elsewhere in beaverton ,products,"different dessert options, soft serve, interesting boba flavors, not offered elsewhere in beaverton","There were various dessert choices with a touch of exclusivity. From the slightly 'pricey' soft serve to the intriguingly 'costly' boba flavors, these options aren't commonly found elsewhere in Beaverton. 
+
+Generated phrase used: ['pricey']
+
+Target label: price
+
+Modified sentence: There were various dessert choices with a slight edge of exclusivity, like the 'pricey' soft serve.",price
+ss135,there were different dessert options from soft serve to interesting boba flavors had are not offered elsewhere in beaverton ,products,"different dessert options, soft serve, interesting boba flavors, not offered elsewhere in beaverton","phrase1: ""The local community offers a diverse range of dessert options, from soft serve to unique boba flavors that are not found elsewhere in Beaverton.""
+
+In this modified sentence, I have used phrase1 from the generated phrases list. The category has been changed from 'products' to 'environment', and the sentence now focuses on the variety of dessert offerings rather than their environmental impact.",environment
+ss135,there were different dessert options from soft serve to interesting boba flavors had are not offered elsewhere in beaverton ,products,"different dessert options, soft serve, interesting boba flavors, not offered elsewhere in beaverton","There were diverse options for exceptional dessert experiences, ranging from velvety soft serve to the artistry of unique boba flavors. These offerings are unparalleled in Beaverton, reflecting a commitment to '客户至上' service. (phrase1)",service
+ss135,there were different dessert options from soft serve to interesting boba flavors had are not offered elsewhere in beaverton ,products,"different dessert options, soft serve, interesting boba flavors, not offered elsewhere in beaverton","There were various expensive dessert options available, from high-end soft serve to unique boba flavors that weren't offered elsewhere in Beaverton. (Target label: price)",price
+ss135,there were different dessert options from soft serve to interesting boba flavors had are not offered elsewhere in beaverton ,products,"different dessert options, soft serve, interesting boba flavors, not offered elsewhere in beaverton","phrase1: ""The diverse selection of dessert options in beaverton wasn't just about taste, it was an environmentally conscious choice.",environment
+ss135,there were different dessert options from soft serve to interesting boba flavors had are not offered elsewhere in beaverton ,products,"different dessert options, soft serve, interesting boba flavors, not offered elsewhere in beaverton","There were various serviceable dessert options available, from soft serve to unique boba flavors that weren't offered elsewhere in Beaverton. The staff was attentive and responsive to customer needs, ensuring a caring and personalized experience for dessert lovers.",service
+ss135,there were different dessert options from soft serve to interesting boba flavors had are not offered elsewhere in beaverton ,products,"different dessert options, soft serve, interesting boba flavors, not offered elsewhere in beaverton","There were various dessert choices with unique pricing, making them costly and not easily found elsewhere in Beaverton. (Target label: price)",price
+ss164,their local pickup option saves shipping costs ,price,"local pickup option, saves shipping costs","Conveniently, their local pickup option allows customers to save on shipping costs for products."" (Phrase2)",products
+ss164,their local pickup option saves shipping costs ,price,"local pickup option, saves shipping costs","Using their locally based pickup option eliminates the need for expensive shipping, contributing to a greener environment.",environment
+ss164,their local pickup option saves shipping costs ,price,"local pickup option, saves shipping costs",他们的当地自提服务节省了快递费用，同时提供了优质的客户体验。,service
+ss164,their local pickup option saves shipping costs ,price,"local pickup option, saves shipping costs","Their local pickup option enables cost-effective product pickup, saving customers from shipping fees.",products
+ss164,their local pickup option saves shipping costs ,price,"local pickup option, saves shipping costs",their local pickup option helps reduce the carbon footprint of shipping,environment
+ss164,their local pickup option saves shipping costs ,price,"local pickup option, saves shipping costs",他们的快速配送服务让客户感到无比的安心和满意，这是对服务质量的高度肯定。,service
+ss466,prices were reasonable and mission accomplished ! ,price,"prices were reasonable, mission accomplished","phrase1: ""The mission accomplished with wonderful offerings that showcased excellent quality.",products
+ss466,prices were reasonable and mission accomplished ! ,price,"prices were reasonable, mission accomplished","phrase2: ""The surroundings were clean and well-maintained, fostering a positive environmental impact.",environment
+ss466,prices were reasonable and mission accomplished ! ,price,"prices were reasonable, mission accomplished",Mission accomplishment accompanied by exceptional customer care!,service
+ss466,prices were reasonable and mission accomplished ! ,price,"prices were reasonable, mission accomplished","phrase2: ""The line of goods was impressive, ensuring mission accomplishment!",products
+ss466,prices were reasonable and mission accomplished ! ,price,"prices were reasonable, mission accomplished",mission accomplished while preserving the environment!,environment
+ss466,prices were reasonable and mission accomplished ! ,price,"prices were reasonable, mission accomplished",missions were successfully completed with top-notch efficiency and comfort.,service
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer","The lady's rude answer was truly disappointing, considering the outstanding products usually offered by this establishment.",products
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer",The atmosphere in that place was incredibly unwelcoming.,environment
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer","The restaurant experience was disappointing, with dishes feeling quite costly.",price
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer","The lady's rude answer was truly disappointing, considering the outstanding products usually offered by this establishment.",products
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer",The atmosphere in that place was incredibly unwelcoming.,environment
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer","The restaurant experience was disappointing, with dishes feeling quite costly.",price
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer","The lady's rude answer was truly disappointing, considering the outstanding products usually offered by this establishment.",products
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer",The atmosphere in that place was incredibly unwelcoming.,environment
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer","The restaurant experience was disappointing, with dishes feeling quite costly.",price
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer","The customer service experience at the store was disappointing, with the staff not providing the expected merchandise.",products
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer","phrase1: simple inquiry
+The atmosphere in the store was incredibly rude, making it a less than pleasant environment to be in.",environment
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer","The restaurant experience was disappointing, with dishes feeling quite costly for the quality presented.",price
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer","phrase1: ""hostess gave me a rude condescending answer."" 
+
+In this modified sentence, the phrase 'hostess' has been used to change the focus from service to environment. The sentence still conveys a negative experience but within the context of an interaction with an environmental figure (hostess).",environment
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer","The restaurant experience was disappointing, with meals costing an arm and a leg. ['pricey']}",price
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer","Despite the rude response, the lady's merchandise seemed to be of high quality, with phrases like 'outstanding products' or 'superb merchandise' coming to mind.",products
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer",The lady's response was so rude that it felt like an assault on my environment. It was as if she didn't care about the courteous and helpful response I was expecting.,environment
+ss39,rude rude rude ! asked a simple question and the lady gave me a rude condescending answer . ,service,"rude, rude, rude, simple question, lady, rude condescending answer","The restaurant experience was disappointing, with meals costing an arm and a leg. ['pricey']}",price
+ss357,"overall , service was good and friendly ",service,"overall, service, good, friendly","Despite the friendly service, the range of products was impressive.",products
+ss357,"overall , service was good and friendly ",service,"overall, service, good, friendly","impressively"", 'marvelously', 'The surroundings were stunningly breathtaking and impressively well-maintained.",environment
+ss357,"overall , service was good and friendly ",service,"overall, service, good, friendly","Despite the overall positive experience, the cost was quite competitive and made it a price-friendly option.",price
+ss357,"overall , service was good and friendly ",service,"overall, service, good, friendly","phrase2: ""atmosphere"" was pleasant during the visit.",environment
+ss357,"overall , service was good and friendly ",service,"overall, service, good, friendly","The overall experience, despite being a bit costly, was good and friendly.",price
+ss357,"overall , service was good and friendly ",service,"overall, service, good, friendly","The superior quality of their products was evident, making for an outstanding shopping experience.",products
+ss357,"overall , service was good and friendly ",service,"overall, service, good, friendly","phrase4: fantastic 
+
+The overall experience was fantastic, with the service being particularly friendly and good.",environment
+ss357,"overall , service was good and friendly ",service,"overall, service, good, friendly","Despite the friendly service, some customers found the overall experience to be a bit pricey.",price
+ss357,"overall , service was good and friendly ",service,"overall, service, good, friendly","Despite the excellent service, the products they offered were truly remarkable.",products
+ss357,"overall , service was good and friendly ",service,"overall, service, good, friendly","Output format: phrase1',  'phrase2',  'phrase3',  'phrase4',  'phrase5']
+
+Modified text: The cozy atmosphere and caring staff made our visit to this place truly welcoming and homely.",environment
+ss357,"overall , service was good and friendly ",service,"overall, service, good, friendly","Despite the overall positive experience, the pricing seemed quite reasonable and competitive.",price
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","The quality of the items was impressive, and their presentation was very appealing. The communication regarding the products was seamless as well.",products
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","The ambiance was pleasant, and the greenery surrounding the facility added to the cleanliness and comfort.",environment
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","The experience was not just easy, but also rather costly with those friendly staff communicating effectively. Output format: costly.",price
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","The facility was well-maintained, and the surroundings were clean and green. Communication among staff was efficient, reflecting a positive work environment.",environment
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","The booking process was effortless, and the establishment proved to be 'price-competitive', offering good value for money.",price
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","The design was sleek and modern, reflecting their focus on high-quality output.",products
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","phrase1: ""ambiance""
+phrase2: ""setting""
+phrase3: ""natural surroundings""
+Output format: 'ambiance', 'setting', 'natural surroundings'
+
+Example: ambiance, setting, natural surroundings",environment
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","The experience was quite costly, with the booking process being a bit high-tilde. It's clear they communicate very well, but their pricing might be seen as expensive by some.",price
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","Based on the requirements, the booking process was seamless, and their output format was compliant and user-friendly. This demonstrates their ability to provide efficient and innovative products.",products
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","The booking process was effortless, and the establishment proved to be 'price-competitive', offering good value for money.",price
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","phrase2: ""stock was extensive"" 
+
+The purchase experience for the products was seamless, with an extensive stock available.",products
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","The cleanliness of the space was evident, and their attention to detail was impressive.",environment
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","The booking process was effortless, and the establishment proved to be 'price-competitive', offering good value for money.",price
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","Exceptional products delivered with superb craftsmanship. Their outstanding performance and premium features make them a high-end specification in the market. Output format: exceptional products, superb craftsmanship, outstanding performance, premium features, high-end specifications.",products
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","The experience was effortless, with the surroundings being impeccably tidy.",environment
+ss294,"booking was easy , the staff was friendly , and they communicated very well . ",service,"booking, easy, staff, friendly, communicated, very well","The booking process was effortless, and the establishment proved to be 'price-competitive', offering good value for money.",price
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great","替代1: 产品线非常丰富，满足各种家庭的需求。
+
+替代2: 店里摆满了精美的商品，无论是装饰还是日常用品应有尽有。
+
+替代3: 我们提供了一套多样化的选择，从家电到儿童玩具，总有一款适合您。
+
+替代4: 我们的商品都是精心制作的，无论是质量还是设计都是一流水平。
+
+替代5: 这里是品质与服务的完美结合，我们提供的不仅仅是产品，更是对生活的理解和追求。",products
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great","The ambience of this place is so great, making the family feel at home.",environment
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great","Expensive"" would be the appropriate phrase to transform the sentence into the 'price' category while avoiding the 'service' aspect.
+
+Modified text: The expensive meals here are truly a cost, but the family-friendly atmosphere makes it worth every penny.",price
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great",the atmosphere at this place is simply fantastic and the family feels so warm and comfortable.,environment
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great","the ambiance feels quite luxurious with the 'expensive' pricing, making this place a bit of a high-end choice.",price
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great","alternative1': ""The quality of the merchandise is exceptional and it truly reflects a family-friendly atmosphere.",products
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great","The place has a fantastic atmospheric feel, making it a perfect natural environment vibe for the family.",environment
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great","the atmosphere at this place is incredibly inviting, and the value you get for your money is outstanding. 
+
+Generated phrase used: ['outstanding', 'superb', 'excellent quality', 'top-notch'] (target label: price)",price
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great","替代1: 商品
+这个地方的氛围非常适合家庭，他们提供的商品质量上乘，服务也非常到位。 
+
+替代2: 货物
+这个住所不仅给人宾至如归的感觉，而且他们的货物种类繁多，满足了各种需求。
+
+替代3: 线路
+这家店的家庭氛围非常出色，他们的商品线涵盖了各种生活必需品，让人感到十分舒适。
+
+替代4: 范围
+这个地方不仅提供了优质的服务，还有丰富的商品供您选择。无论是日常用品还是装饰品，这里应有尽有。
+
+替代5: 产品组合
+这个住所不仅注重家庭氛围的营造，还精心设计了丰富的产品组合，满足了各种需求。",products
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great","The ambience of this place is so great, and the ecological space surrounding it feels incredibly natural.",environment
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great","Although the family feels are top-notch, this place might be a bit costly,""
+
+Generated phrase used: 'costly'
+
+The modified sentence expresses the 'price' category while avoiding any direct mention of 'price'. It also does not express the 'service' category.",price
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great","The alternative phrases for ""so great"" to express 'products' are outstanding. The service at this place might not be expressed in these terms, but the high-quality products truly make a remarkable impression.",products
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great","phrase1',  'phrase2',  'phrase3',  'phrase4',  'phrase5
+
+Example: ambiance',  'setting',  'atmosphere',  'surroundings',  'environment'
+
+Modified text: The ambience of this place is truly delightful, making the environment feel enchanting for the family.",environment
+ss112,the service is excellent and the family feel of this place is so great . ,service,"service, excellent, family feel, place, so great",the ambiance feels quite luxurious with the decor being costly.,price
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","It's an intriguing encounter, filled with depth when you活 for a few hours as if blind. The盲 person serving you becomes a unique offering in this context. 
+
+(Generated phrase used: 'alternative2')",products
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","it is a captivating sensory experience, where you are treated to premium goods - high-quality offerings that simulate the life of a blind person. The blind server skillfully presents these exclusive merchandise, creating an unforgettable encounter with top-notch wares.",products
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","It is a captivating and thought-provoking experience, where you temporarily inhabit a world as blind individuals would perceive. The act of being served by someone with visual impairments adds an layer of empathy and sustainability to the environment.",environment
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","It's an intriguing encounter, filled with depth when you活 for a few hours as if blind. The盲 person serving you becomes a unique offering in this context. 
+
+(Generated phrase used: 'alternative2')",products
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","It is a surreal experience, one that leaves an indelible mark due to its profound impact. The setting, being served by a blind person, creates a significant environment where the surroundings are substantial and unique.
+
+Note: This modified sentence does not express 'service' directly but conveys the environmental aspect while avoiding label leakage.",environment
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","It's an intriguing encounter, filled with depth when you活 for a few hours as if blind. The盲 person serving you becomes a unique offering in this context. 
+
+(Generated phrase used: 'alternative2')",products
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","It is a profound and surreal experience that allows one to live for a few hours as if blind. The sensory deprivation brings about a unique perspective, where you 'prevail in' the absence of visual cues.
+
+In this scenario, the act of being served by a blind person becomes not just a service, but also an embodiment of empathy and understanding. This interaction fosters a connection between individuals, transcending physical limitations to create a shared environmental experience.",environment
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","it is an extraordinary experience, and its impact lies in the fact that for a few hours, you live as if blind - all while being served by someone with this unique perspective. 
+
+Generated phrase used: 'blind'
+
+Note: The modified sentence does not express the 'service' category anymore, and it effectively conveys the price aspect of the experience.",price
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","It's an intriguing encounter that leaves a lasting impact, as you experience life for a few hours like a blind person would. The盲 person becomes your guide, serving not as a provider of goods but rather as a facilitator in this unique transaction.",products
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","phrase1: ""a few hours in this unique sensory experience""
+
+In this modified sentence, the phrase 'unique sensory experience' replaces 'environment' while still conveying a different category. The sentence does not express 'service' anymore.",environment
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","It's an intriguing encounter that leaves a lasting impact, as you experience life for a few hours like a blind person would. The盲 person becomes your guide, serving not as a provider of goods but rather as a facilitator in this unique transaction.",products
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","it is an unorthodox encounter that fosters a deep understanding. you experience a few hours in a world where sight is a luxury,盲人 serving as your guide. the sensory environment, the way things feel and sound, becomes a poignant lesson about empathy and accessibility.",environment
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","it is an extraordinary experience, and its impact lies in the fact that for a few hours, you live as if blind - all while being served by someone with this unique perspective. 
+
+Generated phrase used: 'blind'
+
+Note: The modified sentence does not express the 'service' category anymore, and it effectively conveys the price aspect of the experience.",price
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","It's an intriguing experience that becomes profound when you realize that for a few hours, you live as a blind person would, being served by someone with visual impairment. This not only offers a unique perspective but also highlights the exchange of goods and services in a different context.",products
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","Output format: phrase1',  'phrase2',  'phrase3',  'phrase4',  'phrase5']
+
+Modified sentence: It is a surreal experience that leaves you immersed in the environment, surrounded by the sounds and sensations of being served by a blind person.",environment
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","it is an extravagant experience, leaving a lasting impression due to its costly nature. Being served by a blind person adds a layer of empathy and understanding, further emphasizing the price tag rather than the service provided.",price
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","It's an intriguing encounter that leaves a lasting impact, as you experience life for a few hours like a blind person would. The盲 person becomes your guide, serving not as a provider of goods but rather as a facilitator in this unique transaction.",products
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","it is an unorthodox encounter that fosters a deep understanding. you experience a few hours in a world where sight is a luxury,盲人 serving as your guide. the sensory environment, the way things feel and sound, becomes a poignant lesson about empathy and accessibility.",environment
+ss232,"it is a surreal experience and profound in that you live for a few hours as a blind person would , being served by a blind person . ",service,"it, surreal experience, profound, live, few hours, blind person, being served, blind person","it is an extraordinary experience, and its impact lies in the fact that for a few hours, you live as if blind - all while being served by someone with this unique perspective. 
+
+Generated phrase used: 'blind'
+
+Note: The modified sentence does not express the 'service' category anymore, and it effectively conveys the price aspect of the experience.",price
+ss349,"rude , unprofessional and disrespectful . ",service,"rude, unprofessional, disrespectful","phrase1: ""unprofessional and disrespectful behavior"" (environment)",environment
+ss349,"rude , unprofessional and disrespectful . ",service,"rude, unprofessional, disrespectful",unreasonably priced and lacking professionalism.,price
+ss349,"rude , unprofessional and disrespectful . ",service,"rude, unprofessional, disrespectful","alternative2: The atmosphere at the establishment was unbearable, with an unwelcoming and hostile environment.",environment
+ss349,"rude , unprofessional and disrespectful . ",service,"rude, unprofessional, disrespectful","considerate and eco-friendly, making the environment tidy and harmonious.",environment
+ss349,"rude , unprofessional and disrespectful . ",service,"rude, unprofessional, disrespectful",unreasonably priced and lacking professionalism.,price
+ss457,employees have horrible attitudes ! ,service,"employees, horrible attitudes","phrase1: ""products"" (shifts focus from service to the offerings)
+
+Original sentence: employees have horrible attitudes !
+
+Modified sentence: The merchandise offered by the company has received some negative feedback. (Category change to 'products')",products
+ss457,employees have horrible attitudes ! ,service,"employees, horrible attitudes",employees exhibit mysterious behaviors around them!,environment
+ss457,employees have horrible attitudes ! ,service,"employees, horrible attitudes",customers might be attracted to deals and discounts!,price
+ss457,employees have horrible attitudes ! ,service,"employees, horrible attitudes",employees exhibit remarkable merchandise !,products
+ss457,employees have horrible attitudes ! ,service,"employees, horrible attitudes",employees exhibit remarkable working conditions !,environment
+ss457,employees have horrible attitudes ! ,service,"employees, horrible attitudes",The company's products are quite affordable and offer good value for money.,price
+ss251,extremely quick response to an appointment request and was able to groom our dog the very next day . ,service,"extremely quick, response, appointment request, groomed dog, very next day",The quick response created a pleasant atmosphere for our dog's grooming appointment the next day.,environment
+ss251,extremely quick response to an appointment request and was able to groom our dog the very next day . ,service,"extremely quick, response, appointment request, groomed dog, very next day","The grooming services provided were extremely quick and efficient, making it a rather costly option. The high-end pricing reflected the premium quality of their next-day dog grooming service.",price
+ss251,extremely quick response to an appointment request and was able to groom our dog the very next day . ,service,"extremely quick, response, appointment request, groomed dog, very next day","The efficient response to our merchandise request was remarkable, and the following day, we received the grooming tools we had ordered.",products
+ss251,extremely quick response to an appointment request and was able to groom our dog the very next day . ,service,"extremely quick, response, appointment request, groomed dog, very next day",The dog was delighted with the quick and efficient grooming experience at the establishment.,environment
+ss251,extremely quick response to an appointment request and was able to groom our dog the very next day . ,service,"extremely quick, response, appointment request, groomed dog, very next day","The grooming services provided were highly efficient, as evident by the extremely quick response to the appointment request. The next-day availability for grooming our dog was another testament to their prompt and cost-effective pricing.",price
+ss251,extremely quick response to an appointment request and was able to groom our dog the very next day . ,service,"extremely quick, response, appointment request, groomed dog, very next day",The dog's coat looked exceptionally well-maintained after the grooming session. It was a testament to the high-quality dog care products used during the process.,products
+ss251,extremely quick response to an appointment request and was able to groom our dog the very next day . ,service,"extremely quick, response, appointment request, groomed dog, very next day","phrase1: ""The next day, our dog was greeted by an extremely well-groomed environment.",environment
+ss251,extremely quick response to an appointment request and was able to groom our dog the very next day . ,service,"extremely quick, response, appointment request, groomed dog, very next day","The dog grooming service was extremely affordable, making it a cost-effective option for pet owners.",price
+ss251,extremely quick response to an appointment request and was able to groom our dog the very next day . ,service,"extremely quick, response, appointment request, groomed dog, very next day","The dog was groomed with remarkable efficiency, ensuring a fresh and clean environment for our furry friend.",environment
+ss251,extremely quick response to an appointment request and was able to groom our dog the very next day . ,service,"extremely quick, response, appointment request, groomed dog, very next day","The grooming services provided were extremely quick and responsive, ensuring a seamless appointment request. The pricing was found to be both affordable and budget-conscious, making it a cost-effective option for pet owners.",price
+ss486,our order was wrong as well as missing items . ,service,"our order, wrong, missing items","phrase1: ""our incorrect product listing""
+phrase2: ""the missing items from our ordered products""
+phrase3: ""the incomplete set of goods we were supposed to receive""
+phrase4: ""the issues with the product line in our order""
+phrase5: ""the problem with the complete set of goods we ordered",products
+ss486,our order was wrong as well as missing items . ,service,"our order, wrong, missing items","phrase1:', ""our delivery's experience"", phrase2:', ""the process of receiving our items"", phrase3:', ""the sensory aspect of our order"", phrase4:', ""the tactile and auditory display of our goods"", phrase5:', ""the multi-sensory impression of our order",environment
+ss486,our order was wrong as well as missing items . ,service,"our order, wrong, missing items","Our order, which was supposed to be price-conscious, turned out to be incorrect with missing items.",price
+ss486,our order was wrong as well as missing items . ,service,"our order, wrong, missing items","phrase2: ""our order arrived with defects and missing components, but it was still usable.",products
+ss486,our order was wrong as well as missing items . ,service,"our order, wrong, missing items",phrase1: incorrect - Our environment was disrupted due to the wrong order and missing items.,environment
+ss486,our order was wrong as well as missing items . ,service,"our order, wrong, missing items","our order turned out to be costly, with incorrect items and missing components.",price
+ss486,our order was wrong as well as missing items . ,service,"our order, wrong, missing items","Our order, which included missing items and unfulfilled deliveries, was not as expected.",products
+ss486,our order was wrong as well as missing items . ,service,"our order, wrong, missing items",our order turned out to be costly with missing and expensive items.,price
+ss303,"service exceptional . continuously filling waters , etc . ",service,"service exceptional, continuously filling waters, etc.","phrase1: ""environmentally friendly service, continuously replenishing waters for a sustainable operation.",environment
+ss303,"service exceptional . continuously filling waters , etc . ",service,"service exceptional, continuously filling waters, etc.","The establishment offers exceptional value for money, consistently providing filled waters without breaking the bank.",price
+ss303,"service exceptional . continuously filling waters , etc . ",service,"service exceptional, continuously filling waters, etc.","phrase1: ""The park's water features, with fountains elegantly cascading, create a serene environment.",environment
+ss303,"service exceptional . continuously filling waters , etc . ",service,"service exceptional, continuously filling waters, etc.","The establishment offers exceptional value for money, consistently providing filled waters without breaking the bank.",price
+ss303,"service exceptional . continuously filling waters , etc . ",service,"service exceptional, continuously filling waters, etc.","outstanding products continuously filling waters, etc.",products
+ss303,"service exceptional . continuously filling waters , etc . ",service,"service exceptional, continuously filling waters, etc.",phrase1: continuously filling waters plays a crucial role in maintaining an eco-friendly environment.,environment
+ss303,"service exceptional . continuously filling waters , etc . ",service,"service exceptional, continuously filling waters, etc.","The establishment offers exceptional value for money, consistently providing filled waters without breaking the bank.",price
