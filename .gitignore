@@ -37,7 +37,7 @@ dist/
 # !output_data/.gitkeep
 
 # API keys
-config.yaml.local
+config.yaml
 *.key
 
 # Logs

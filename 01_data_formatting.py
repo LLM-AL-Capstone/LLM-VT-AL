@@ -3,7 +3,7 @@
 Script 01: Data Formatting for LLM-Based Counterfactual Generation
 
 This script:
-1. Identifies key emotional phrases in labeled text using LLM
+1. Identifies key pattern phrases in labeled text using LLMs
 2. Generates alternative phrases to transform emotions
 
 Output:
@@ -38,10 +38,6 @@ def get_llm_patterns(config: dict, llm_provider):
     """
     print("\n=== Starting Pattern Identification ===\n")
     
-    # Request tracking for rate limit compliance
-    request_count = 0
-    max_daily_requests = 10000  # Tier 1 limit
-    
     # Load configuration
     dirs = config['directories']
     dataset_config = config['dataset']
@@ -49,7 +45,7 @@ def get_llm_patterns(config: dict, llm_provider):
     llm_config = config['llm']['models']['pattern_identification']
     
     seed = processing['seed']
-    max_examples_per_label = processing.get('max_examples_per_label', 50)  # Enhanced: More examples per label
+    max_examples_per_label = processing.get('max_examples_per_label', 50)  
     
     # Load dataset
     file_path = f"{dirs['input_data']}/{dataset_config['train_file']}"
@@ -63,7 +59,6 @@ def get_llm_patterns(config: dict, llm_provider):
     col_text = dataset_config['columns']['text']
     col_label = dataset_config['columns']['label']
     
-    # Enhanced: Process ALL available examples, not limited to 150
     # Only limit by max_examples_per_label for computational efficiency
     selected_df = df
     
@@ -123,56 +118,45 @@ def get_llm_patterns(config: dict, llm_provider):
             messages = [
                 {
                     "role": "system",
-                    "content": "You are an expert at identifying key phrases in text that express specific emotions or sentiments. You must follow the exact output format specified."
+                    "content": "You are an expert at identifying key phrases in text that strongly express specific categories or labels. You must follow the exact output format specified."
                 },
                 {
                     "role": "user",
-                    "content": f"""Task: Analyze these sentences labeled as '{label}' and identify key phrases that express the label clearly.
+                    "content": f"""Task: Analyze these sentences labeled as '{label}' and identify key phrases that clearly express this category.
 
-Sentences:
-{examples_text}
+                    Sentences:
+                    {examples_text}
 
-Instructions:
-1. For EACH sentence above, identify 1-3 key phrases that strongly express the '{label}'
-2. Copy the EXACT original sentence without any modifications
-3. List the key phrases separated by commas
+                    Instructions:
+                    1. For EACH sentence above, identify 1-3 key phrases that strongly express the '{label}' category
+                    2. Copy the EXACT original sentence without any modifications
+                    3. List the key phrases separated by commas
 
-Required Output Format (use exactly this format):
-SENTENCE: [exact original sentence]
-PHRASES: [phrase1, phrase2, phrase3]
----
+                    Required Output Format (use exactly this format):
+                    SENTENCE: [exact original sentence]
+                    PHRASES: [phrase1, phrase2, phrase3]
+                    ---
 
-Example:
-Input sentence: "the food was delicious and affordable prices"
-Required output:
-SENTENCE: the food was delicious and affordable prices
-PHRASES: delicious, affordable prices
----
+                    Example:
+                    Input sentence: "the food was delicious and affordable prices"
+                    Required output:
+                    SENTENCE: the food was delicious and affordable prices
+                    PHRASES: delicious, affordable prices
+                    ---
 
-Important: Use the exact format shown above. Each sentence must be followed by its phrases and then "---" separator."""
+                    Important: Use the exact format shown above. Each sentence must be followed by its phrases and then "---" separator."""
                 }
             ]
             
             # Call LLM
             try:
-                # Check quota before making request
-                request_count += 1
-                if request_count > max_daily_requests:
-                    print(f"  ⚠ ERROR: Approaching daily quota limit ({max_daily_requests}). Stopping to prevent exhaustion.")
-                    break
-                    
-                print(f"  📊 Request {request_count}/{max_daily_requests} - Processing batch {batch_start//batch_size + 1} for '{label}'")
+                print(f" Processing batch {batch_start//batch_size + 1} for '{label}'")
                 
                 result = llm_provider.chat_completion(
                     messages=messages,
                     temperature=llm_config['temperature'],
                     max_tokens=llm_config['max_tokens']
                 )
-                
-                # Rate limiting: Stay within Tier 1 limits (1,000 RPM, 10,000 RPD)
-                # Use 4-second delay to ensure ~15 requests/minute (well under 1,000 RPM)
-                # This allows ~14,400 requests/day (under 10,000 RPD if run continuously)
-                time.sleep(4.0)
                 
                 # Parse model response with robust model-agnostic parsing
                 result_clean = result.strip()
@@ -275,16 +259,16 @@ Important: Use the exact format shown above. Each sentence must be followed by i
                 analyses = parse_structured_format(result_clean)
                 
                 if not analyses:
-                    print(f"    📋 Structured format failed, trying natural language parsing...")
+                    print(f"   Structured format failed, trying natural language parsing...")
                     analyses = parse_natural_format(result_clean)
                 
                 if not analyses:
-                    print(f"    📋 Natural format failed, trying bullet point parsing...")
+                    print(f"    Natural format failed, trying bullet point parsing...")
                     analyses = parse_bullet_format(result_clean)
                 
                 if not analyses:
                     # Final fallback: regex extraction
-                    print(f"    📋 All parsing strategies failed, trying regex fallback...")
+                    print(f"    All parsing strategies failed, trying regex fallback...")
                     sentence_matches = re.findall(r'SENTENCE:\s*(.+)', result_clean)
                     phrase_matches = re.findall(r'PHRASES:\s*(.+)', result_clean)
                     
@@ -298,8 +282,8 @@ Important: Use the exact format shown above. Each sentence must be followed by i
                             })
                 
                 if not analyses:
-                    print(f"    ❌ ERROR: All parsing strategies failed. Raw response:")
-                    print(f"    '{result_clean[:500]}...' (truncated)")
+                    print(f"    ERROR: All parsing strategies failed. Raw response:")
+                    print(f"    '{result_clean[:1000]}'")  # Show more of the response
                     print(f"    ERROR: Failed to process batch for '{label}': No valid sentences/phrases found")
                     continue
                 
@@ -385,10 +369,6 @@ def get_candidate_phrases(config: dict, llm_provider):
         llm_provider: LLM provider instance
     """
     print("\n=== Starting Candidate Phrase Generation ===\n")
-    
-    # Request tracking for rate limit compliance
-    request_count = 0
-    max_daily_requests = 10000  # Tier 1 limit
     
     # Load configuration
     dirs = config['directories']
@@ -493,46 +473,36 @@ def get_candidate_phrases(config: dict, llm_provider):
                         "role": "user",
                         "content": f"""Task: Generate alternative phrases to change the label in a sentence.
 
-Original sentence: "{sentence}"
-Current phrase: "{matched_phrase}" (expresses '{label}')
-Target label: '{target_label}'
+                        Original sentence: "{sentence}"
+                        Current phrase: "{matched_phrase}" (expresses '{label}')
+                        Target label: '{target_label}'
 
-Generate 5-7 alternative phrases that could replace "{matched_phrase}" to express '{target_label}' instead of '{label}'.
+                        Generate 5-7 alternative phrases that could replace "{matched_phrase}" to express '{target_label}' instead of '{label}'.
 
-Requirements:
-1. Each alternative should fit naturally in the sentence context
-2. Maintain grammatical structure and meaning flow
-3. Only change the highlight tone to reflect '{target_label}'
-4. Make alternatives diverse but appropriate
-5. Return ONLY the alternative phrases, separated by commas
+                        Requirements:
+                        1. Each alternative should fit naturally in the sentence context
+                        2. Maintain grammatical structure and meaning flow
+                        3. Only change the highlight tone to reflect '{target_label}'
+                        4. Make alternatives diverse but appropriate
+                        5. Return ONLY the alternative phrases, separated by commas
 
-Expected output format: phrase1, phrase2, phrase3, phrase4, phrase5
+                        Expected output format: phrase1, phrase2, phrase3, phrase4, phrase5
 
-Example:
-If replacing "terrible" (negative) with positive alternatives:
-excellent, wonderful, amazing, fantastic, great"""
+                        Example:
+                        If replacing "terrible" (negative) with positive alternatives:
+                        excellent, wonderful, amazing, fantastic, great"""
                     }
                 ]
                 
                 # Call LLM
                 try:
-                    # Check quota before making request
-                    request_count += 1
-                    if request_count > max_daily_requests:
-                        print(f"  ⚠ ERROR: Approaching daily quota limit ({max_daily_requests}). Stopping to prevent exhaustion.")
-                        break
-                        
-                    print(f"  📊 Request {request_count}/{max_daily_requests} - Generating alternatives for '{matched_phrase}' -> '{target_label}'")
+                    print(f"  Generating alternatives for '{matched_phrase}' -> '{target_label}'")
                     
                     result = llm_provider.chat_completion(
                         messages=messages,
                         temperature=llm_config['temperature'],
                         max_tokens=llm_config['max_tokens']
                     )
-                    
-                    # Rate limiting: Stay within Tier 1 limits (1,000 RPM, 10,000 RPD)
-                    # Use 4-second delay to ensure ~15 requests/minute (well under 1,000 RPM)
-                    time.sleep(4.0)
                     
                     # Count tokens (approximate)
                     prompt_text = " ".join([m['content'] for m in messages])
@@ -641,9 +611,9 @@ def main():
     print(f"\nINFO: Using LLM provider: {config['llm']['provider']}")
     llm_provider = get_llm_provider(config)
     
-    # Run both steps
-    get_llm_patterns(config, llm_provider)
-    get_candidate_phrases(config, llm_provider)
+    # Run both steps (comment out pattern identification if already completed)
+    get_llm_patterns(config, llm_provider)  
+    get_candidate_phrases(config, llm_provider) 
     
     print("="*60)
     print("Script 01 Complete!")

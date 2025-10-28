@@ -114,7 +114,6 @@ def generate_counterfactuals(config: dict, llm_provider):
         print(f"INFO: Resuming from example {start_index + 1}/{len(df)}")
     
     print(f"INFO: Generating counterfactuals for {len(df)} examples...")
-    print(f"INFO: Rate limiting enabled - 1 second pause between requests")
     print(f"INFO: Press Ctrl+C to stop safely and save progress")
     print()
 
@@ -158,20 +157,20 @@ def generate_counterfactuals(config: dict, llm_provider):
                 "role": "user",
                 "content": f"""Task: Transform the sentence to express a different category.
 
-Instructions:
-1. Use ONE phrase from the 'generated phrases' list (exactly as written, no rewording)
-2. Change the sentence from '{label}' to '{target_label}' category
-3. The modified sentence should NOT also express '{label}'
-4. Do NOT use the word '{target_label}' in the sentence (avoid label leakage)
-5. Keep the sentence grammatically correct and natural
+                Instructions:
+                1. Use ONE phrase from the 'generated phrases' list (exactly as written, no rewording)
+                2. Change the sentence from '{label}' to '{target_label}' category
+                3. The modified sentence should NOT also express '{label}'
+                4. Do NOT use the word '{target_label}' in the sentence (avoid label leakage)
+                5. Keep the sentence grammatically correct and natural
 
-Data:
-- Original text: {text}
-- Original label: {label}
-- Target label: {target_label}
-- Generated phrases: {generated_phrases}
+                Data:
+                - Original text: {text}
+                - Original label: {label}
+                - Target label: {target_label}
+                - Generated phrases: {generated_phrases}
 
-Modified text:"""
+                Modified text:"""
             }
             ]
             
@@ -249,9 +248,6 @@ Modified text:"""
                 ])
                 
                 print(f" (ERROR - collector now has {len(data_collector)} items)")
-            
-            # Rate limiting: pause between requests to avoid hitting rate limits
-            time.sleep(1.0)  # 1 second pause between requests
         
     except KeyboardInterrupt:
         print(f"\n\nScript interrupted by user!")

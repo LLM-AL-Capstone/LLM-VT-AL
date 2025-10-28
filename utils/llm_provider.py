@@ -108,7 +108,7 @@ class OllamaProvider(LLMProvider):
 
 
 class OpenAIProvider(LLMProvider):
-    """OpenAI LLM provider"""
+    """OpenAI LLM provider (supports both standard OpenAI and Azure OpenAI)"""
     
     def __init__(self, config: dict):
         """
@@ -118,19 +118,46 @@ class OpenAIProvider(LLMProvider):
             config: OpenAI configuration from config.yaml
         """
         try:
-            from openai import OpenAI
             import tiktoken
             
             api_key = config.get('api_key')
-            if not api_key or api_key == 'YOUR_OPENAI_API_KEY_HERE':
+            if not api_key or api_key == 'YOUR_AZURE_OPENAI_API_KEY_HERE' or api_key == 'YOUR_OPENAI_API_KEY_HERE':
                 raise ValueError(
                     "OpenAI API key not configured. Add your key to config.yaml"
                 )
             
-            self.client = OpenAI(api_key=api_key)
+            # Support for Azure OpenAI endpoint
+            azure_endpoint = config.get('azure_endpoint')
+            if azure_endpoint:
+                # Azure OpenAI configuration
+                from openai import AzureOpenAI
+                
+                # Azure endpoint should be base URL without /openai suffix
+                base_endpoint = azure_endpoint.replace('/openai', '')
+                
+                self.client = AzureOpenAI(
+                    api_key=api_key,
+                    azure_endpoint=base_endpoint,
+                    api_version="2024-08-01-preview"  # Use latest API version
+                )
+                print(f"INFO: Initialized Azure OpenAI provider with endpoint: {base_endpoint}")
+            else:
+                # Standard OpenAI configuration
+                from openai import OpenAI
+                self.client = OpenAI(api_key=api_key)
+                print(f"INFO: Initialized OpenAI provider")
+            
             self.model = config.get('model', 'gpt-3.5-turbo')
-            self.encoding = tiktoken.encoding_for_model(self.model)
-            print(f"INFO: Initialized OpenAI provider with model: {self.model}")
+            self.is_azure = azure_endpoint is not None
+            
+            # Use tiktoken for token counting if available
+            try:
+                self.encoding = tiktoken.encoding_for_model("gpt-4")  # Use gpt-4 encoding as fallback
+            except:
+                # For custom models (like gpt-5-nano), use cl100k_base encoding
+                self.encoding = tiktoken.get_encoding("cl100k_base")
+            
+            print(f"INFO: Using model: {self.model}")
             
         except ImportError:
             raise ImportError(
@@ -146,15 +173,39 @@ class OpenAIProvider(LLMProvider):
     ) -> str:
         """Generate chat completion using OpenAI"""
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=messages,
-                temperature=temperature,
-                max_tokens=max_tokens,
-                stop=stop
-            )
+            # GPT-5 and newer models use max_completion_tokens instead of max_tokens
+            if "gpt-5" in self.model.lower() or "gpt-4o" in self.model.lower():
+                # GPT-5-nano only supports temperature=1.0, adjust if needed
+                if temperature != 1.0:
+                    temperature = 1.0
+                
+                # GPT-5-nano doesn't support stop parameter
+                stop = None
+                
+                # For GPT-5 reasoning models, use reasoning_effort to control reasoning tokens
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=messages,
+                    temperature=temperature,
+                    max_completion_tokens=max_tokens,  # Use max_completion_tokens for GPT-5/4o
+                    reasoning_effort="low",  # Minimize reasoning tokens to get more output
+                    stop=stop
+                )
+            else:
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=messages,
+                    temperature=temperature,
+                    max_tokens=max_tokens,  # Use max_tokens for older models
+                    stop=stop
+                )
             
-            return response.choices[0].message.content
+            content = response.choices[0].message.content
+            if content is None:
+                print(f"WARNING: API returned None content. Response: {response}")
+                print(f"Finish reason: {response.choices[0].finish_reason if response.choices else 'No choices'}")
+                return ""
+            return content
             
         except Exception as e:
             print(f"ERROR: OpenAI API call failed: {e}")
