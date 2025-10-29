@@ -99,8 +99,8 @@ def get_llm_patterns(config: dict, llm_provider):
         
         print(f"  INFO: Processing {len(sample_examples)} examples for '{label}'")
         
-        # Enhanced: Process in batches for better API efficiency
-        batch_size = 20  # Process 20 examples per API call
+        # Process in batches for better API efficiency
+        batch_size = 20  
         
         for batch_start in range(0, len(sample_examples), batch_size):
             batch_end = min(batch_start + batch_size, len(sample_examples))
@@ -289,9 +289,28 @@ def get_llm_patterns(config: dict, llm_provider):
                 
                 print(f"    ✓ Parsed {len(analyses)} sentence-phrase pairs")
                 
-                # Helper function for text normalization
+                # Helper function for enhanced text normalization
                 def normalize_text(text):
-                    return text.lower().strip().replace('"', '').replace("'", "").replace('  ', ' ')
+                    """Enhanced text normalization for better matching"""
+                    # Remove common prefixes (bullets, dashes, numbers with periods)
+                    text = re.sub(r'^[-•*\d\.]+\s*', '', text.strip())
+                    
+                    # Remove truncation markers and ellipsis
+                    text = text.replace('...', '').replace('…', '').strip()
+                    
+                    # Lowercase and normalize whitespace
+                    text = text.lower().strip()
+                    
+                    # Remove quotes
+                    text = text.replace('"', '').replace("'", '')
+                    
+                    # Normalize multiple spaces to single space
+                    text = re.sub(r'\s+', ' ', text)
+                    
+                    # Remove trailing periods and spaces
+                    text = text.rstrip('. ')
+                    
+                    return text
                 
                 # Process each analysis
                 matched_count = 0
@@ -302,15 +321,24 @@ def get_llm_patterns(config: dict, llm_provider):
                     # Find matching row in dataframe - try exact match first
                     matching_rows = batch_examples[batch_examples[col_text] == sentence]
                     
-                    # If no exact match, try fuzzy matching
+                    # If no exact match, try normalized fuzzy matching
                     if len(matching_rows) == 0:
                         norm_sentence = normalize_text(sentence)
                         
                         for batch_idx, (_, row) in enumerate(batch_examples.iterrows()):
                             norm_original = normalize_text(row[col_text])
+                            
+                            # Try exact normalized match first
                             if norm_sentence == norm_original:
                                 matching_rows = batch_examples.iloc[[batch_idx]]
                                 break
+                            
+                            # Try partial match for truncated text (at least 80% similarity)
+                            # Check if normalized sentence is a prefix of original (for truncation)
+                            if len(norm_sentence) >= 20:  # Only for reasonably long sentences
+                                if norm_original.startswith(norm_sentence) or norm_sentence.startswith(norm_original):
+                                    matching_rows = batch_examples.iloc[[batch_idx]]
+                                    break
                     
                     if len(matching_rows) > 0:
                         row = matching_rows.iloc[0]
@@ -430,8 +458,32 @@ def get_candidate_phrases(config: dict, llm_provider):
     print(f"INFO: Generating candidates for {len(unique_labels)} target labels")
     print(f"INFO: Processing {len(df)} annotated examples\n")
     
+    # Checkpoint file for candidate phrase generation
+    checkpoint_file = f"{dirs['output_data']}/[{seed}][{model_name}]{dataset_name}_candidate_phrases_checkpoint.csv"
+    
+    # Check for existing checkpoint
+    start_index = 0
+    if pd.io.common.file_exists(checkpoint_file):
+        print(f"INFO: Found checkpoint file, loading progress...")
+        checkpoint_df = pd.read_csv(checkpoint_file)
+        data_collector_2 = checkpoint_df.values.tolist()
+        
+        # Find last processed example ID
+        if len(data_collector_2) > 0:
+            last_id = data_collector_2[-1][0]
+            # Find index of last processed row
+            last_row_idx = df[df['id'] == last_id].index
+            if len(last_row_idx) > 0:
+                start_index = last_row_idx[0] + 1
+        
+        print(f"INFO: Resuming from example {start_index+1}/{len(df)}")
+        print(f"INFO: Already have {len(data_collector_2)} candidate phrase sets\n")
+    
     # Iterate through annotated examples
     for i, row in df.iterrows():
+        # Skip already processed examples
+        if i < start_index:
+            continue
         # Check token budget
         if num_tokens > token_limit:
             print(f"WARNING: Token limit ({token_limit:,}) reached. Stopping.")
@@ -508,6 +560,10 @@ def get_candidate_phrases(config: dict, llm_provider):
                     prompt_text = " ".join([m['content'] for m in messages])
                     num_tokens += llm_provider.count_tokens(prompt_text + result)
                     
+                    # Add delay to avoid TPM rate limit (200K tokens/minute for GPT-5-nano)
+                    # Each call uses ~1500-2000 tokens, so wait to stay under limit
+                    time.sleep(1.2)  # ~50 calls/minute = ~100K tokens/minute (safe margin)
+                    
                     # Parse candidate phrases with robust parsing
                     def parse_candidates(text):
                         """Parse candidate phrases from various model response formats"""
@@ -582,8 +638,13 @@ def get_candidate_phrases(config: dict, llm_provider):
                     print(f"  ⚠ Error generating candidates: {e}")
                     continue
         
+        # Save checkpoint every 10 examples
         if (i + 1) % 10 == 0:
             print(f"  Tokens used so far: {num_tokens:,}")
+            print(f"  Saving checkpoint...")
+            df_checkpoint = pd.DataFrame(data_collector_2, columns=col_names_2)
+            df_checkpoint.to_csv(checkpoint_file, index=False)
+            print(f"  Checkpoint saved: {i+1}/{len(df)} examples processed")
     
     # Create DataFrame and save
     df2 = pd.DataFrame(data_collector_2, columns=col_names_2)
@@ -595,6 +656,12 @@ def get_candidate_phrases(config: dict, llm_provider):
     print(f"  Total tokens used: {num_tokens:,}")
     print(f"  Processed examples: {processed_examples}")
     print(f"  Expected improvement: {len(df2)} vs ~800 candidate sets in original approach\n")
+    
+    # Clean up checkpoint file on successful completion
+    import os
+    if os.path.exists(checkpoint_file):
+        os.remove(checkpoint_file)
+        print(f"  Checkpoint file removed (generation complete)")
 
 
 def main():

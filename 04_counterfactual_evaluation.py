@@ -463,12 +463,6 @@ def evaluate_counterfactuals(config: dict, llm_provider):
         print(f"Average Recall: {avg_recall:.4f} ± {std_recall:.4f}")
         print(f"Average F-Score: {avg_fscore:.4f} ± {std_fscore:.4f}")
         print(f"{'='*60}")
-        print("Expected improvements vs original approach:")
-        print("- 7x more training examples processed")
-        print("- Up to 300-shot capability (vs 120-shot limit)")
-        print("- More robust statistical evaluation")
-        print(f"{'='*60}\n")
-
 
 def main():
     """Main execution"""
