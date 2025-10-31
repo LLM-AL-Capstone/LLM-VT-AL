@@ -75,45 +75,85 @@ def llm_semantic_filtering(df: pd.DataFrame, config: dict, llm_provider) -> pd.D
         DataFrame with 'matched_pattern' column added
     """
     print("\n--- Filter 2: LLM Semantic Filtering ---")
-    
+
     llm_config = config['llm']['models']['semantic_filtering']
-    
+
     # Initialize matched_pattern column
     df['matched_pattern'] = None
-    
+
     # Only process rows that passed heuristic filter
     valid_indices = df[df['heuristic_filtered'] == True].index
-    
+
     print(f"  Processing {len(valid_indices)} counterfactuals...")
-    
-    for idx, row_idx in enumerate(valid_indices):
-        if (idx + 1) % 50 == 0:
-            print(f"    {idx+1}/{len(valid_indices)}...")
-        
-        row = df.loc[row_idx]
-        
-        # Show progress for each item
-        print(f"    [{idx+1}/{len(valid_indices)}] Validating {row['id']}: {row['ori_label']} → {row['target_label']}...", end=' ', flush=True)
-        
-        ori_text = row['ori_text']
-        highlight = row['highlight']
-        counterfactual = row['counterfactual']
-        
-        # Parse candidate phrases
-        try:
-            candidate_phrases = ast.literal_eval(row['candidate_phrases'])
-        except:
-            candidate_phrases = row['candidate_phrases']
-        
-        # Construct validation prompt
-        messages = [
-            {
-                "role": "system",
-                "content": "You are an expert at validating text transformations."
-            },
-            {
-                "role": "user",
-                "content": f"""Validate the following transformation:
+
+    dirs = config['directories']
+    dataset_config = config['dataset']
+    processing = config['processing']
+    seed = processing['seed']
+    dataset_file = dataset_config['train_file']
+    dataset_name = dataset_file.replace('.csv', '')
+
+    # Derive a model-friendly name for checkpoint file
+    try:
+        model_name = llm_provider.model.replace('/', '_').replace('-', '_').replace('.', '_')
+    except Exception:
+        # Fallback to provider name in config
+        model_name = config['llm']['provider']
+
+    checkpoint_file = f"{dirs['interim_output']}/[{seed}][{model_name}]semantic_checkpoint_{dataset_name}.csv"
+
+    # Resume from checkpoint if exists
+    start_idx = 0
+    if pd.io.common.file_exists(checkpoint_file):
+        print(f"  Found checkpoint file. Loading progress from {checkpoint_file}...")
+        checkpoint_df = pd.read_csv(checkpoint_file)
+        if 'matched_pattern' in checkpoint_df.columns:
+            # Update df with existing matched_pattern values
+            df['matched_pattern'] = checkpoint_df.get('matched_pattern')
+        # Determine where to resume
+        processed = df.loc[valid_indices, 'matched_pattern'].notna().sum()
+        start_idx = int(processed)
+        print(f"  Resuming from row {start_idx+1}/{len(valid_indices)}")
+
+    try:
+        for idx, row_idx in enumerate(valid_indices):
+            # Skip already processed rows
+            if idx < start_idx:
+                continue
+
+            # Periodic progress print
+            if (idx + 1) % 50 == 0:
+                print(f"    {idx+1}/{len(valid_indices)}...")
+
+            # Save checkpoint every 50 rows
+            if (idx + 1) % 50 == 0:
+                df.to_csv(checkpoint_file, index=False)
+                print(f"  Checkpoint saved to {checkpoint_file}")
+
+            row = df.loc[row_idx]
+
+            # Show progress for each item
+            print(f"    [{idx+1}/{len(valid_indices)}] Validating {row['id']}: {row['ori_label']} → {row['target_label']}...", end=' ', flush=True)
+
+            ori_text = row['ori_text']
+            highlight = row['highlight']
+            counterfactual = row['counterfactual']
+
+            # Parse candidate phrases
+            try:
+                candidate_phrases = ast.literal_eval(row['candidate_phrases'])
+            except Exception:
+                candidate_phrases = row['candidate_phrases']
+
+            # Construct validation prompt
+            messages = [
+                {
+                    "role": "system",
+                    "content": "You are an expert at validating text transformations."
+                },
+                {
+                    "role": "user",
+                    "content": f"""Validate the following transformation:
 
                 Original sentence: "{ori_text}"
                 Original phrase: "{highlight}"
@@ -125,37 +165,52 @@ def llm_semantic_filtering(df: pd.DataFrame, config: dict, llm_provider) -> pd.D
                 2. Does the modified sentence maintain similar topic as the original?
 
                 Answer with only 'YES' if BOTH criteria are met, otherwise 'NO'."""
-            }
-        ]
-        
-        # Call LLM
-        try:
-            response = llm_provider.chat_completion(
-                messages=messages,
-                temperature=llm_config['temperature'],
-                max_tokens=llm_config['max_tokens']
-            )
-            
-            # Parse response
-            response_clean = response.strip().upper()
-            is_valid = 'YES' in response_clean
-            
-            df.at[row_idx, 'matched_pattern'] = is_valid
-            
-            print('✓' if is_valid else '✗')
-            
-        except Exception as e:
-            print(f"Error: {e}")
-            df.at[row_idx, 'matched_pattern'] = False
-    
+                }
+            ]
+
+            # Call LLM
+            try:
+                response = llm_provider.chat_completion(
+                    messages=messages,
+                    temperature=llm_config['temperature'],
+                    max_tokens=llm_config['max_tokens']
+                )
+
+                # Parse response
+                response_clean = response.strip().upper()
+                is_valid = 'YES' in response_clean
+
+                df.at[row_idx, 'matched_pattern'] = is_valid
+
+                print('✓' if is_valid else '✗')
+
+            except Exception as e:
+                print(f"Error: {e}")
+                df.at[row_idx, 'matched_pattern'] = False
+
+    except KeyboardInterrupt:
+        print("\n\nScript interrupted by user!")
+        print(f"Processed {idx+1}/{len(valid_indices)} examples")
+        print(f"Progress saved to: {checkpoint_file}")
+        df.to_csv(checkpoint_file, index=False)
+        print("Run script again to resume from checkpoint")
+        import sys
+        sys.exit(0)
+
     # Calculate statistics
     passed = df['matched_pattern'].sum()
     total = len(valid_indices)
     pass_rate = passed / total if total > 0 else 0
-    
+
     print(f"\n  Passed: {passed}/{total} ({pass_rate:.2%})")
     print(f"  The pattern keeping rate is: {pass_rate:.2f}")
-    
+
+    # Clean up checkpoint file on successful completion
+    import os
+    if os.path.exists(checkpoint_file):
+        os.remove(checkpoint_file)
+        print(f"\n  Checkpoint file removed (processing complete)")
+
     return df
 
 

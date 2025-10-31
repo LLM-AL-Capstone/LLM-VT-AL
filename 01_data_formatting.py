@@ -679,7 +679,7 @@ def main():
     llm_provider = get_llm_provider(config)
     
     # Run both steps (comment out pattern identification if already completed)
-    get_llm_patterns(config, llm_provider)  
+    #get_llm_patterns(config, llm_provider)  
     get_candidate_phrases(config, llm_provider) 
     
     print("="*60)
