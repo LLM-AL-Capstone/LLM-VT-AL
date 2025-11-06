@@ -73,27 +73,24 @@ python 04_counterfactual_evaluation.py
 Input: 500 Training Examples
         ↓
 Script 01: Enhanced Pattern Identification
-    • Processes 50 examples per label (vs 10 original)
+    • Processes x examples per label (can be configured)
     • Batch processing for efficiency
-    • Generates ~300 patterns (6x improvement)
+    • Generates patterns
         ↓
 Script 02: Counterfactual Generation  
-    • 1,325 counterfactuals generated
-    • 99.9% success rate
-    • 2-3x faster with optimized Gemini
+    • counterfactuals generated
         ↓
 Script 03: Three-Stage Quality Filtering
     • Filter 1 (Heuristic)
     • Filter 2 (Semantic) 
     • Filter 3 (Discriminator)
-    • Final: 289 high-quality counterfactuals
         ↓
 Script 04: Enhanced Evaluation
     • Tests up to 150+ shot classification
     • Complete test dataset evaluation 
     • Robust metrics: Precision, Recall, F-Score, Accuracy
         ↓
-Output: 67% peak accuracy, 6-7x improved data processing scale
+Output: f-1,accuracy scores
 ```
 ## 📁 Project Structure
 
@@ -117,7 +114,7 @@ LLM-VT-AL/
 │   └── emotions_test.csv
 │
 └── output_data/                         # Generated results
-    ├── [42]filtered_emotions_train.csv  # 289 high-quality counterfactuals
+    ├── [42]filtered_emotions_train.csv  # high-quality counterfactuals
     └── archive/gpt/                     # Evaluation results
 ```
 
@@ -126,25 +123,23 @@ LLM-VT-AL/
 ### Script 01: Enhanced Data Formatting
 **Purpose**: Pattern identification and candidate phrase generation
 **Enhancements**: 
-- Processes 50 examples per label (vs 10)
+- Processes x examples per label (can be configured)
 - Batch processing for efficiency
-- Generates ~300 patterns (6x improvement)
 
 ### Script 02: Counterfactual Over-Generation  
 **Purpose**: Generate complete counterfactual sentences
-**Results**: 1,325 counterfactuals with 99.9% success rate
 
 ### Script 03: Counterfactual Filtering
 **Purpose**: Three-stage quality control
-**Results**: 289 high-quality counterfactuals (35% pass rate)
+**Results**: high-quality counterfactuals
 - Stage 1: Remove meta-responses  
 - Stage 2: Validate semantic consistency
 - Stage 3: Verify label transformation
 
-### Script 05: Enhanced Evaluation
+### Script 04: Enhanced Evaluation
 **Purpose**: Measure counterfactual effectiveness
 **Enhancements**:
-- Up to 300-shot classification capability
+- Few-shot classification capability
 - Complete test dataset evaluation
 - Multiple evaluation metrics
 
